@@ -1,7 +1,6 @@
 From http://stackoverflow.com/questions/5400806/what-are-the-most-used-vim-commands-keypresses
 
 See also http://vimdoc.sourceforge.net/htmldoc/usr_toc.html
-Wiki formatting from https://en.wikipedia.org/wiki/Wikipedia:Text_editor_support#Vim
 
 == General ==
 
@@ -248,7 +247,7 @@ To edit a macro, paste it into a new buffer, then update the register:
 
 == Blocks (Visual Mode) ==
 
-Note: in gvim, visual mode is exited if you use arrow keys; you must use H J K L
+Note: in gvim, visual mode is exited if you use arrow keys; you must use: h j k l
 
 Or, with mswin enabled, just use shift+arrow as works in other windows programs
 

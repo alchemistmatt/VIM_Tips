@@ -222,7 +222,7 @@ if has("autocmd")
 		"
 		" Make vim recognize a file ending in ".fasta" be a fasta file
 		"
-		:autocmd BufNewFile,BufRead *.fasta set filetype=fasta
+		:autocmd BufNewFile,BufRead *.fasta set filetype=proteinFasta
 
         " Universal syntax coloring for text files
 		" Highlights numbers, http, etc.
