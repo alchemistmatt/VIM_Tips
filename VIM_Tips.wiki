@@ -6,34 +6,35 @@ Wiki formatting from https://en.wikipedia.org/wiki/Wikipedia:Text_editor_support
 == General ==
 
 Nearly all commands can be preceded by a number for a repeat count. eg. 5dd delete 5 lines
-<Esc> gets you out of any mode and back to command mode
-Commands preceded by : are executed on the command line at the bottom of the screen
-:help CmdName      Help with any command
-:h CmdName         :h shorthand
+The escape key gets you out of any mode and back to command mode
+Commands preceded by : are executed on the command line at the bottom of the screenA
+`:help CmdName`      Help with any command
+`:h CmdName`         :h shorthand
+
 
 == Navigation ==
 
-Cursor movement: h j k l    (left down up right)
+Cursor movement: `h j k l`    (left down up right)<br>
 On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
 
 === By character ===
 
-fx   To [count]'th occurrence of x to the right (allows [a-zA-Z0-9])
-Fx   To [count]'th occurrence of x to the left
+`fx`   To [count]'th occurrence of x to the right (allows [a-zA-Z0-9])
+`Fx`   To [count]'th occurrence of x to the left
 
-tx   Till before [count]'th occurrence of x to the right
-Tx   Till before [count]'th occurrence of x to the left
+`tx`   Till before [count]'th occurrence of x to the right
+`Tx`   Till before [count]'th occurrence of x to the left
 
-;    Repeat the latest f or t [count] times (on the same line)
-,    Repeat the latest f or t [count] times in the opposite direction (on the same line)
+`;`    Repeat the latest f or t [count] times (on the same line)
+`,`    Repeat the latest f or t [count] times in the opposite direction (on the same line)
 
-%    To matching marker, one of ([{}]) or /* */ or #if #endif
+`%`    To matching marker, one of ([{}]) or /* */ or #if #endif
 
-[(   Go to previous unmatched (
-[{   Go to previous unmatched {
+`[(`   Go to previous unmatched (
+`[{`   Go to previous unmatched {
 
-](   Go to next unmatched (
-]{   Go to next unmatched }
+`](`   Go to next unmatched (
+`]{`   Go to next unmatched }
 
 === By words ===
 
