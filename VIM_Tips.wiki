@@ -1,0 +1,537 @@
+From http://stackoverflow.com/questions/5400806/what-are-the-most-used-vim-commands-keypresses
+
+See also http://vimdoc.sourceforge.net/htmldoc/usr_toc.html
+Wiki formatting from https://en.wikipedia.org/wiki/Wikipedia:Text_editor_support#Vim
+
+== General ==
+
+Nearly all commands can be preceded by a number for a repeat count. eg. 5dd delete 5 lines
+<Esc> gets you out of any mode and back to command mode
+Commands preceded by : are executed on the command line at the bottom of the screen
+:help CmdName      Help with any command
+:h CmdName         :h shorthand
+
+== Navigation ==
+
+Cursor movement: h j k l    (left down up right)
+On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
+
+=== By character ===
+
+fx   To [count]'th occurrence of x to the right (allows [a-zA-Z0-9])
+Fx   To [count]'th occurrence of x to the left
+
+tx   Till before [count]'th occurrence of x to the right
+Tx   Till before [count]'th occurrence of x to the left
+
+;    Repeat the latest f or t [count] times (on the same line)
+,    Repeat the latest f or t [count] times in the opposite direction (on the same line)
+
+%    To matching marker, one of ([{}]) or /* */ or #if #endif
+
+[(   Go to previous unmatched (
+[{   Go to previous unmatched {
+
+](   Go to next unmatched (
+]{   Go to next unmatched }
+
+=== By words ===
+
+w    Next word (by punctuation)
+W    Next word (by spaces)
+
+b    Back word (by punctuation)
+B    Back word (by spaces)
+
+e    End word (by punctuation)
+E    End word (by spaces)
+
+ge   Backward to the end of the word
+gE   Backward to the end of the Word
+
+=== By line ===
+0    Start of line
+^    First non-whitespace
+$    End of line
+
+=== By paragraph ===
+{    Previous blank line
+}    Next blank line
+
+=== By sentence ===
+(    Previous sentence
+)    Next sentence
+
+=== New title ===
+
+=== By file ===
+gg       Start of file
+G        End of file
+123G     Go to line 123
+50%      Go to 50% point
+512go    Go to byte 512
+
+g <Ctrl+g>    View current position in status line
+              In Visual mode, shows the size of the block
+__BEGIN__
+
+=== By marker ===
+mx         Set a mark named x
+'x         Go to mark named
+'.         Go to position of last edit
+' '        Go back to last point before jump (two apostrophes, no space)
+:marks     See marks
+
+=== By edit history ===
+
+<CTRL+o>   Go to [count] Older cursor position in jump list
+<CTRL+i>   Go to [count] Newer cursor position in jump list
+:ju[mps]   Print the jump list
+
+g;         Go to [count] older cursor position in change list
+g,         Go to [count] newer cursor position in change list
+:changes
+
+== Scrolling ==
+<CTRL+f>   Forward full screen
+<CTRL+b>   Backward full screen
+<CTRL+d>   Down half screen
+<CTRL+u>   Up half screen
+<CTRL+e>   Scroll one line up
+<CTRL+y>   Scroll one line down (not on Windows, since Ctrl+y is redo -- todo: fix that)
+zz         Center the cursor line
+H          Top of screen
+L          Bottom of screen
+
+== Editing ==
+
+u              Undo
+<CTRL+r>       Redo
+.              Repeat last editing command
+<CTRL+g> u     While in insert mode, marks a new undo point
+
+:earlier 2m    Undo back to the state 2 minutes ago
+:later 2m      Redo forward in time (2 minutes)
+g-             Previous text state
+g+             Next text state
+wundo {file}   Write undo history to a file
+rundo {file}   Read undo history from a file
+
+== Inserting ==
+
+All insertion commands are terminated with <Esc> to return to command mode.
+
+i       Insert text at cursor
+I       Insert text at start of line
+a       Append text after cursor
+A       Append text after end of line
+o       Open new line below
+O       Open new line above
+
+This command requires a .vimrc overrides as shown
+<Shift+Enter>      Enter a blank line above the current line; map <S-Enter> O<ESC>
+
+== Changing ==
+
+Changing means to delete the characer, word, line, etc. and enter Insert mode
+The deleted item does get placed into the paste buffer
+
+r          Replace single character; R replace multiple characters
+s          Change single character
+cw         Change word
+C          Change to end of line
+cc         Change whole line (delete the line and enter insert mode)
+c<motion>  Changes text in the direction of the motion
+ci(        Change inside parentheses (see text object selection for more examples)
+
+== Deleting ==
+
+Deleting deletes the item, but does not enter insert mode
+The deleted item does get placed into the paste buffer
+
+x            Delete single char
+dw           Delete word
+D            Delete to end of line
+dd           Delete whole line
+
+d<motion>    Deletes in the direction of the motion, e.g. d$ or d0
+             In visual mode, d deletes the current selection
+d$           Delete to end of line
+d0           Delete to start of line
+d^           Delete to start of line
+d4j          Delete from here through 4 lines down
+
+== Cut and paste (put) ==
+
+yy    Copy line into paste buffer
+y$    Copy from character to the end of the line
+
+dd    Cut line into paste buffer
+dw    Cut word into paste buffer
+
+p     Paste buffer below cursor line
+P     Paste buffer above cursor line
+
+xp    Swap two characters (x to delete one character, then p to put it back after the cursor position)
+
+"4p   Paste from register 4 (auto-populated with recent cut/copy operations)
+"bp   Paste from register b
+
+== Registers ==
+
+Use {a-zA-Z0-9.%#:-"} for the next delete, yank, or put operation
+:reg[isters]    Show all registers
+:reg 1a         Show registers 1 and a
+
+Registers 0-9 hold the most recent delete / yank contents
+Named registers a-z only populate when explictly used.  Use A-Z to append
+* and + are the GUI clipboard
+
+"byy    Copy the entire line into register b
+"bY     Same as "byy
+
+"byj    Copy this line and the next line (k=down); store in register b
+"Byy    Copy this line and append to register b (because capital B)
+"bp     Paste contents of register b
+
+3"myj   Copy this line and the next 3 lines; store in register m
+8"+yj   Copy this line and the next 3 lines; store in the GUI clipboard
+
+:%y+    Copy all lines to the GUI clipboard (% means all lines; y is yank, and + is GUI clipboard)
+gg"*yG  Alternative to copy all, but moves the cursor
+"*y     Copy to clipboard when in Visual Mode (equivalent to <Ctrl+c>)
+
+== Sorting ==
+
+:[range]sor[t]    Sort lines in [range].  If no range, then sort all lines
+:1,50sor          Sort lines 1 to 50
+:1,50sor!         Reverse sort lines 1 to 50
+:1,50sor i        Ignore case
+:1,50sor n        Sort by number
+:1,50sor u        Remove duplicates
+
+:sort /{pattern}/      Begin sorting after the match to a pattern
+:sort /.*\%10v/        Sort starting at virtual column 10
+:sort /.\{-}\ze\d/ n   Sort on the first number (the \ze flag means to end the match while \d is a digit)
+:sort /\a\a\a/ r       Only use the first three letters to sort (\a is a character class)
+
+== Case ==
+
+~     Change case of single character
+g~    Swap case
+gu    Make lowercase
+gU    Make uppercase
+
+== Macros ==
+qa        Start recording macro a
+q         Stop recording
+@a        Playback macro a
+@@        Playback the most recent macro
+qaq       Erase a macro (start a recording of macro a, then stop it)
+
+
+To edit a macro, paste it into a new buffer, then update the register:
+
+:new      New buffer
+:enew     New file in the current buffer (use :enew! to discard changes)
+"xp       Paste register x into the buffer
+[edit the keystrokes]
+<Esc>     Return to normal mode
+0"xy$     Go to beginning of line; into register x, yank to end of line
+:bd!      Delete the new buffer without saving (same as :q!)
+@x        Execute modified recording
+
+
+== Blocks (Visual Mode) ==
+
+Note: in gvim, visual mode is exited if you use arrow keys; you must use H J K L
+Or, with mswin enabled, just use shift+arrow as works in other windows programs
+To select a block with the mouse use Alt+LeftClick
+
+v          Visual block stream
+V          Visual block line
+<CTRL+v>   Visual block column 
+           Alternatively, <CTRL+q> when CTRL+v is paste
+           I have mapped Q to Visual Block using _vimrc
+           Alternatively, use Ctrl+LeftClick 
+<CTRL+g>   Toggle between visual mode and select mode
+most motion commands extend the block to the new cursor position
+
+o          Moves the cursor to the other end of the block
+d or x     Cut block into paste buffer
+y          Copy block into paste buffer
+c          Change text (cut into paste buffer then enter Insert mode)
+s          Same as c
+rx         Replace the selected text with x
+>          Indent block
+<          Unindent block
+~          Change case
+gv         Reselect last visual block
+
+I          Visual Block insert mode; typed text will appear at the start of each line
+A          Visual Block append mode; typed text will appear at the end of each line
+<Ctrl+r>"  Insert the contents of the unnamed register (last yank or delete)
+<Ctrl+r>*  Insert the contents of the GUI clipboard
+<Ctrl+r>b  Insert the contents of register b
+
+== Searching ==
+
+/           search forward
+?           Search backward
+q/          See menu of recent searches.  The list can be navigated and entries edited
+*           Search forward for word under cursor
+#           Search backward for word under cursor
+n           Next match in same direction
+N           Next match in opposite direction
+/http:\/\/  Search for http://
+
+== Replacing ==
+
+:s/this/that/             Replace this with that; only changes the first match of the current line (or of selected lines)
+:s/this/that/g            Replace all occurrences on the line (or selected lines)
+:s/this/that/gc           Ask for confirmation before replacingi
+:s/this/that/gi           Count number of matches, but do not replace
+:s/this/this\r/g          Replace "this" with "this" followed by a carriage return
+:s/this|\that/other\r/g   Replace "this" or "that" with "other"
+
+:set gdefault      Remove the need for /g
+:set gdefault?     Check current setting
+:set nogdefault    Restore /g requirement
+
+== Global Replace ==
+
+:%s/foo/bar/g         Substitute all occurrences of "foo" to "bar"
+:%s/this/that/gc      Ask for confirmation for each; "q" to quit the search/replace
+
+:%s/\(\d\+\)/\1,/gc   Find all sequential numbers (\d\+) and add a comma after them
+:%s/\v(\d+)/\1\,/gc   Use \v to remove the need for all of the extra \ characters 
+                      (i.e., to tell vim that you are intentially using regex symbols)
+
+:%s/pattern//gn       Count the number of matches (leave out the g to count the lines)
+
+To remove the need to type \v, update .vimrc to have the following.
+  The problem with doing this is that it makes it harder to press /
+  then the up arrow to see previous search terms.
+nnoremap / /\v
+vnoremap / /\v
+
+== Global Operator ==
+
+The g operator acts on a specified range (default whole file), by executing the given command 
+for each line matching the pattern.  Before executing the cmd, "." is set to the current line.
+
+:g/foo/                  Show all occurrences of foo
+:g/foo/z.3               Show all occurrences of foo, with context
+:g/foo/z=3               Show all occurrences of foo, with context, matched line is highlighed with ----------
+:g/foo/z#=3              Show all occurrences of foo, with context, number the output lines
+
+:g/foo/d                 Delete all lines containing foo
+:g!/pattern/d            Delete all lines that do not match the pattern
+:v/pattern/d             Same as g!
+:g/^\s*$/d               Delete all blank lines (zero or more whitespace characters)
+
+:qaq:g/pattern/y A       Copy (yank) all matching lines into register a (must type qaq first to clear register a)
+
+:g/pattern/normal @q     Run macro q on all matching lines
+
+Examples:
+:g!/^.\+[*].\+$/d        Delete all lines that do not contain *
+:g!/\v^.+[*].+$/d        Equalivant command using \v
+
+=== Search/replace in gvim on Windows ===
+
+:prompt            See a search dialog
+:promptr           See a search/replace dialog
+
+:ret[ab]           Replace all tabs with spaces (default spaces per tab, see :set tabstop?)
+                   Only works if ":set expandtab" is enabled
+:set expandtab     Note that expandtab is a per-file extension setting
+:ret 8             Replace all tabs with 8 spaces; also updates tabstop
+
+== Commands ==
+
+:CommandName       Enter a command
+:help CommandName  Get help on a command
+q:                 See menu of recent commands. The list can be navigated and entries edited
+
+== Files ==
+
+:w             Write file to disk (whether or not it has changes)
+:w name        Write file to disk as name (but original filename remains unchanged)
+:saveas name   Save under a new name
+:update        Write file to disk if it has changed (mapped to Ctrl+S in mswin.vim)
+:n             Edit a new file; :n! edit a new file without saving current changes
+
+:q             Quit editing a file; :q! quit editing without saving changes
+:e             Refresh file contents (if changed outside vim)
+:e!            Reload even though buffer has changed
+ZZ             Write file to disk and quit
+:qa[all]       Close all buffers, unless they're modified
+:conf qa       Confirm qall; see save prompt for each modified buffer
+:bmod          Go to the next modified buffer
+
+:file          Print the current filename to the status line (same as Ctrl+G)
+:file!         Print the filename and do not truncate if a very long name
+:!echo %       Echo full path to console (allow for copy)
+:rec[over]     Recover lost changes after VIM crashes; uses the :sw[ap] file
+
+:browse oldfiles   See recent files; type a number to open one; if lots of files, press q to exit the "more" listing
+:bro ol            Shorthand
+:ol[dfiles]        See recent files
+
+:MRU               Use mru plugin (see also File->Recent Files in the GUI)
+
+'0             Open most recent file
+'1             Open second most recent file (works through '9)
+               "Most recent" files are saved when you exit vim
+
+:e .           Directory explorer (in current window; file must be unchanged)
+:Explore       Directory explorer in the path of the current file (split if file modified, otherwise file closed)
+:Hexplore      Directory explorer in the path of the current file (split window)
+:Texplore      Directory explorer in the path of the current file (new tab)
+
+=== Directory Explorer Shortcuts ===
+
+<Enter>        Open the selected file (and close the explorer)
+v              Open the selected file with a vertical split (explorer on the right)
+P              Edit selected file in the previously used (last accessed) window
+s              Change sort
+r              Reverse sort
+i              Change listing style
+u              Change to earlier directory
+U              Change to later directory
+p              Preview selected file
+%              Create a new file
+d              Create a new directory
+x              Execute application for selected file (e.g. open .html file in a browser)
+               Related to this, type gx while editing a file to have that file opened in the application
+R              Rename the current file
+<CTRL+l>       Refresh the listing
+<CTRL+h>       Define the hiding list (patterns to hide); comma separated list
+a              Cycle from showing all files, hiding the specified files, or only showing the specified files from <CTRL+h>
+mf             Mark files.  After marking, could show/hide with "a".  Many other commands exist list cut, copy, delete, etc.
+mF             Unmark all files
+md             Vimdiff two marked files
+mh             Add a marked file's suffix to the hiding list
+
+qb             Query bookmarks
+
+
+== Windows ==
+
+<CTRL+w>s           Split window
+<CTRL+w>n           New window
+<CTRL+w>j           Down to next window;
+<CTRL+w>k           Up to previous window
+<CTRL+w>p           Previous window
+<CTRL+w>w           Next window (same as <CTRL+w><CTRL+w>; Ctrl+Tab works with gvim)
+<CTRL+w>c           Close the window (same as :q)
+
+<CTRL+w>_           Maximise current window
+<CTRL+w>=           Make all windows equal size
+
+<CTRL+w>+           Increase horizontal window size
+5<CTRL+w>-          Decrease horizontal window size by 5 lines
+
+<CTRL+w>>           Move vertical slider one column to the right
+5<CTRL+w><          Move vertical slider 5 columns to the left
+
+<CTRL+w>r           Swap two windows
+<CTRL+w>H           Go from horizontal to vertical layout (use capital H)
+<CTRL+w>J           Go from vertical to horizontal layout (use capital J)
+
+:tabe               Create a new tab
+:tab new            Create a new tab
+:tabnew             Open a file in a new tab (file dialog box is shown)
+Ctrl+PageUp         Next tab
+Ctrl+PageDown       Previous tab
+
+== Source Navigation ==
+
+%                   Jump to matching parenthesis/bracket/brace, or language block if language module loaded
+gd                  Go to definition of local symbol under cursor;
+<CTRL+]>            Jump to definition of global symbol (requires tags file)
+<CTRL+t>            Return to previous position (arbitrary stack of positions maintained)
+<CTRL+n>            (in insert mode) automatic word completion
+
+== Syntax Coloring ==
+
+Vim auto-selects the highlighting method based on the file extension.  To override, use:
+:setf language      Set current language
+:set filetype       View current language
+
+:syn list           View current syntax rules; use d and u to move down and up
+:syn clear          Turn off highlighting
+:e                  Refresh (reload) the file to re-enable default highlighting
+
+:hi[light]          List all highlight groups; use d and u to move down and up
+
+=== Diagnosing Performance ===
+
+Use :syntime to find out what patterns are consuming most time
+
+:syntime on
+[ redraw the text at least once with CTRL-L ]
+:syntime report
+
+== Show local changes ==
+
+Vim has some features that make it easy to highlight lines that have been changed from a base version in source control.
+I have created a small vim script that makes this easy: http://github.com/ghewgill/vim-scmdiff
+
+== Formatting ==
+
+Set the wrap width:
+:set textwidth=80
+
+Optionally define this in vimrc on a file-type basis
+au BufRead,BufNewFile *.txt setlocal textwidth=80
+
+To wrap existing lines, select them with V (or with the mouse)
+then type gq
+
+To join two lines together, use J
+A space will be added between the two joined lines
+
+:Comma    Call a custom function (defined in _vimrc) to add a comma to each line
+:Commaq   Similar to :Comma but surrounds each line with single quotes
+
+== VimDiff ==
+
+VimDiff shows two files side-by-side
+
+[c      Jump to previous change (difference)
+]c      Jump to next change (difference)
+
+zo      Open one fold under the cursor
+zO      Open all folds under the cursor (recursively)
+
+zc      Close one fold under the cursor
+zC      Close all folds under the cursor
+
+za      Toggle one fold under the cursor
+zA      Toggle all folds under the cursor
+
+zX      Undo manually opened and closed folds
+
+== Settings ==
+
+F11                      Toggle showing white space; enabled by adding listchars and highlight lines to .vmrc
+                         Or type :set list!
+:set gdefault?           View the current value for the gdefault setting
+:verbose map <C-Y>       See what the Ctrl+Y key combination is mapped to
+:map                     See key bindings
+:unmap <C-Y>             Place this in _vmrc to unmap Ctrl+Y
+:scriptnames             See loaded scripts, including .vimrc
+
+See the mswin.vim file to see the overridden key combos and find those to remove/tweak
+
+== External Programs ==
+
+:Thtml        Run Tidy to format an html file
+:Txml         Run Tidy to format a xml file
+
+These are mapped to commands in the _vimrc file:
+:command Thtm  :%!tidy -q -i --tidy-mark 0      2>/dev/null<CR>
+:command Txml  :%!tidy -q -i --tidy-mark 0 -xml 2>/dev/null<CR>
+
