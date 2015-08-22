@@ -61,7 +61,7 @@ can read it.
 
 5. Edit the registry to make it so that files double clicked in explorer open in a new tab
 * Go to key HKEY_CLASSES_ROOT\Applications\gvim.exe\shell\edit\command and set the Value Data to
- C:\Program Files (x86)\Vim\vim74\gvim.exe --remote-tab-silent "%1"
+ "C:\Program Files (x86)\Vim\vim74\gvim.exe" --remote-tab-silent "%1"
 
 == Color Schemes ==
 
