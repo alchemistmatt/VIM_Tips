@@ -1,6 +1,8 @@
-From http://stackoverflow.com/questions/5400806/what-are-the-most-used-vim-commands-keypresses
+This document of VIM tips was originally inspired by 
+http://stackoverflow.com/questions/5400806/what-are-the-most-used-vim-commands-keypresses
 
-See also http://vimdoc.sourceforge.net/htmldoc/usr_toc.html
+The complete VIM manual is available online at
+http://vimdoc.sourceforge.net/htmldoc/usr_toc.html
 
 == General ==
 

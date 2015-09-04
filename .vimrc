@@ -54,13 +54,13 @@ set incsearch		" do incremental searching
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
 
-" In many terminal emulators the mouse works just fine, thus enable it
+" In many terminal emulators the mouse works just fine, could enable it
 " The one downside is inability to highlight text with Putty
 " and have that text be placed on the clipboard;
 " additionally, right click paste is diabled in Putty when mouse=a is enabled
-if has('mouse')
-    set mouse=a
-endif
+" if has('mouse')
+"     set mouse=a
+" endif
 
 " Do not hide the mouse cursor when typing
 set nomousehide
