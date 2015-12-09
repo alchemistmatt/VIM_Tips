@@ -58,9 +58,9 @@ inoremap <C-U> <C-G>u<C-U>
 " The one downside is inability to highlight text with Putty
 " and have that text be placed on the clipboard;
 " additionally, right click paste is diabled in Putty when mouse=a is enabled
-if has('mouse')
-    set mouse=a
-endif
+" if has('mouse')
+"     set mouse=a
+" endif
 
 " Do not hide the mouse cursor when typing
 set nomousehide

@@ -520,6 +520,9 @@ VimDiff shows two files side-by-side
 
  zX      Undo manually opened and closed folds
 
+ dp      Put the selected section in the other file
+ do      Obtain the selected section from the other file
+
 == Settings ==
 
  F11                      Toggle showing white space; enabled by adding listchars and highlight lines to .vmrc
