@@ -21,6 +21,11 @@ set selectmode=""
 " This is already enabled via mswin.vim
 set backspace=indent,eol,start
 
+" Stop certain movements from always going to the first character of a line.
+" While this behaviour deviates from that of Vi, it does what most users
+" coming from other editors would expect.
+set nostartofline
+
 if has("vms")
     set nobackup		" do not keep a backup file, use versions instead
 else
@@ -50,11 +55,33 @@ set ruler           " show the cursor position all the time
 set showcmd         " show commands as they're typed 
 set incsearch		" do incremental searching
 
+" This is required for vim-airline to work
+set laststatus=2
+
+" Simple status line that just shows filename:
+" set statusline=%f "tail of the filename
+
+" Detailed status line from got-ravings
+" set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
+
+" jamessan's status line
+" set statusline=   " clear the statusline for when vimrc is reloaded
+" set statusline+=%-3.3n\                      " buffer number
+" set statusline+=%f\                          " file name
+" set statusline+=%h%m%r%w                     " flags
+" set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+" set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
+" set statusline+=%{&fileformat}]              " file format
+" set statusline+=%=                           " right align
+" set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  "highlight
+" set statusline+=%b,0x%-8B\                   " current char
+" set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
+
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
 
-" In many terminal emulators the mouse works just fine, thus enable it
+" In many terminal emulators the mouse works just fine, could enable it
 " The one downside is inability to highlight text with Putty
 " and have that text be placed on the clipboard;
 " additionally, right click paste is diabled in Putty when mouse=a is enabled
@@ -81,11 +108,8 @@ set guioptions+=b      " Show the horizontal scrollbar
 
 " Define the window size
 set co=162
-set lines=35
+set lines=40
 set cmdheight=2
-
-" This is required for vim-airline to work
-set laststatus=2
 
 set gcr=n-v-c:block-Cursor/lCursor-blinkwait700-blinkoff1000-blinkon1000,ve:ver20-Cursor,o:hor50-Cursorblinkwait700-blinkoff1000-blinkon1000,i-ci:ver25-Cursor/lCursorblinkwait700-blinkoff1000-blinkon1000,r-cr:hor20-Cursor/lCursorblinkwait700-blinkoff1000-blinkon1000,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 
@@ -239,6 +263,8 @@ if has("autocmd")
         :autocmd BufNewFile,BufRead MzRef*.txt set filetype=R
         :autocmd BufNewFile,BufRead ProMex*.txt set filetype=R
 
+		" Disable auto-commenting for all files
+		:autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 	endif
 else
 

@@ -1,0 +1,5 @@
+$include /etc/inputrc
+
+# Allow for tab-completion of file / directory names to be case insensitive
+set completion-ignore-case on
+set show-all-if-ambiguous on

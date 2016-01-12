@@ -21,6 +21,11 @@ set selectmode=""
 " This is already enabled via mswin.vim
 set backspace=indent,eol,start
 
+" Stop certain movements from always going to the first character of a line.
+" While this behaviour deviates from that of Vi, it does what most users
+" coming from other editors would expect.
+set nostartofline
+
 if has("vms")
     set nobackup		" do not keep a backup file, use versions instead
 else
@@ -50,7 +55,9 @@ set ruler           " show the cursor position all the time
 set showcmd         " show commands as they're typed 
 set incsearch		" do incremental searching
 
+" This is required for vim-airline to work
 set laststatus=2
+
 " Simple status line that just shows filename:
 " set statusline=%f "tail of the filename
 
@@ -58,17 +65,17 @@ set laststatus=2
 " set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
 
 " jamessan's status line
-set statusline=   " clear the statusline for when vimrc is reloaded
-set statusline+=%-3.3n\                      " buffer number
-set statusline+=%f\                          " file name
-set statusline+=%h%m%r%w                     " flags
-set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
-set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
-set statusline+=%{&fileformat}]              " file format
-set statusline+=%=                           " right align
-set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  "highlight
-set statusline+=%b,0x%-8B\                   " current char
-set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
+" set statusline=   " clear the statusline for when vimrc is reloaded
+" set statusline+=%-3.3n\                      " buffer number
+" set statusline+=%f\                          " file name
+" set statusline+=%h%m%r%w                     " flags
+" set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+" set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
+" set statusline+=%{&fileformat}]              " file format
+" set statusline+=%=                           " right align
+" set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  "highlight
+" set statusline+=%b,0x%-8B\                   " current char
+" set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
@@ -236,6 +243,8 @@ if has("autocmd")
         :autocmd BufNewFile,BufRead *.txt set filetype=txt
 
 
+		" Disable auto-commenting for all files
+		:autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 	endif
 else
 
