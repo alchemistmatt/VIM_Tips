@@ -364,10 +364,11 @@ Examples:
 
 == Files ==
 
- :w             Write file to disk (whether or not it has changes)
- :w name        Write file to disk as name (but original filename remains unchanged)
+ :w             Write buffer to disk (whether or not it has changes)
+ :w name        Write buffer to disk as name (but original filename remains unchanged)
+ :DiffOrig      Compare buffer text to file on disk to see changes
  :saveas name   Save under a new name
- :update        Write file to disk if it has changed (mapped to Ctrl+S in mswin.vim)
+ :update        Write buffer to disk if it has changed (mapped to Ctrl+S in mswin.vim)
  :n             Edit a new file; :n! edit a new file without saving current changes
 
  :q             Quit editing a file; :q! quit editing without saving changes
