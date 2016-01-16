@@ -6,6 +6,45 @@ http://www.vim.org/download.php
 Latest 64-bit version (auto-compiled)
 https://tuxproject.de/projects/vim/
 
+=== Installation Steps ===
+
+1. Download the "self-installing executable" from http://www.vim.org/download.php
+   - This is 32-bit gVIM, compiled in 2013
+2. Double click gvim74.exe
+3. Dialog says "This will install Vim 7.4 on your computer. Continue?"  Click Yes
+4. Uninstall everything, but do not delete "C:\Program Files\Vim" because it has _vimrc
+   - This is a hard-linked file:  "C:\Program Files (x86)\Vim\_vimrc" <--> c:\users\d3l243\_vimrc
+   - Created using:
+
+ cd C:\Program Files\Vim
+ mklink /h _vimrc c:\users\d3l243\_vimrc
+
+   - This was done because gvim first looks for a _vimrc file at ~
+   - And also so that VisVim (for Visual Studio) could read it
+
+5. Next the installer starts
+   - Use the "Typical" options (all checked except "Create .bat files", "Create plugin directories", and "VisVim Extension"
+6. Change the destination folder to "C:\Program Files\Vim"
+   - Reason: we will replace the x86 version with the 64-bit version later
+7. Download the 64-bit .7z archive from https://tuxproject.de/projects/vim/
+8. Extract the files
+9. Copy all of the files and paste in folder C:\Program Files\Vim\vim74
+10. Start an admin-level command prompt
+11. Remove the secondary stream bit (see it with "dir /r")
+
+ cd "C:\Program Files\Vim\vim74"
+ streams -s -d *
+
+12. Double click gVim.exe in C:\Program Files\Vim\vim74
+13. The program should start and report version 7.4.1089
+14. Customize your _vimrc file, see folder c:\users\d3l243
+15. Copy customized plugins and syntax files to  c:\users\d3l243\vimfiles
+
+16. Edit the registry to make it so that files double clicked in explorer open in a new tab
+* Go to key HKEY_CLASSES_ROOT\Applications\gvim.exe\shell\edit\command and set the Value Data to
+ "C:\Program Files\Vim\vim74\gvim.exe" --remote-tab-silent "%1"
+
+
 == Plugins ==
 
 Automatic reload of modified Vim scripts
@@ -29,7 +68,7 @@ http://www.vim.org/scripts/script.php?script_id=521
 ScrollColors: Easily scroll through color schemes
 http://www.vim.org/scripts/script.php?script_id=1488
 
-VIM-Airline 
+VIM-Airline
 http://vimawesome.com/plugin/vim-airline-sad-beautiful-tragic
  git clone https://github.com/bling/vim-airline
 
@@ -41,27 +80,6 @@ http://www.vim.org/scripts/script.php?script_id=1532
 mediawiki.vim
 https://github.com/chikamichi/mediawiki.vim/blob/master/syntax/mediawiki.vim
 (click on Raw)
-
-== Installation ==
-
-1. Run the GUI installer
-
-2. Extract the latest 64-bit files and use Beyond Compare to update the files at "C:\Progrm Files (x86)\"
-
-3. Place the _vimrc file at c:\users\d3l243\
-* Create a hard link to the file at an admin prompt using:
- cd C:\Program Files (x86)\Vim
- mklink /h _vimrc c:\users\d3l243\_vimrc
-
-We must do this because gvim first looks for a _vimrc file at ~
-and we have to place the file there so that VisVim (for Visual Studio)
-can read it.
-
-4. Place customized plugins and syntax files at c:\users\d3l243\vimfiles
-
-5. Edit the registry to make it so that files double clicked in explorer open in a new tab
-* Go to key HKEY_CLASSES_ROOT\Applications\gvim.exe\shell\edit\command and set the Value Data to
- "C:\Program Files (x86)\Vim\vim74\gvim.exe" --remote-tab-silent "%1"
 
 == Color Schemes ==
 
