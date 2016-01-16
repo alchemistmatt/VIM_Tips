@@ -80,6 +80,7 @@ On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
  g <Ctrl+g>    View current position in status line
               In Visual mode, shows the size of the block
 === By marker ===
+
  mx         Set a mark named x
  'x         Go to mark named
  '.         Go to position of last edit
@@ -374,7 +375,7 @@ Examples:
  :q             Quit editing a file; :q! quit editing without saving changes
  :e             Refresh file contents (if changed outside vim)
  :e!            Reload even though buffer has changed
- ZZ             Write file to disk and quit
+ ZZ             Write file to disk and quit immediately
  :qa[all]       Close all buffers, unless they're modified
  :conf qa       Confirm qall; see save prompt for each modified buffer
  :bmod          Go to the next modified buffer
