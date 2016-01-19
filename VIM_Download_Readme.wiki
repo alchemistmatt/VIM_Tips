@@ -156,7 +156,7 @@ txt.vim: http://www.vim.org/scripts/script.php?script_id=1532
 
 mediawiki.vim: https://github.com/chikamichi/mediawiki.vim/
 
-=== Unix Installation ===
+=== Linux Installation ===
 
 <pre>cd ~/.vim/bundle/
 git clone https://github.com/sjl/gundo.vim.git gundo
@@ -171,21 +171,21 @@ unzip -d yankring yankring_190.zip
 
 curl -o ScrollColor.vim http://www.vim.org/scripts/download_script.php?src_id=5966
 mkdir scrollcolor
-mkdir scrollcolor\plugin
-mv ScrollColor.vim scrollcolor\plugin
+mkdir scrollcolor/plugin
+mv ScrollColor.vim scrollcolor/plugin
 
 cd ~/.vim
 mkdir colors
 cd colors
 
-curl -o SlateDark.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/SlateDark.vim
+curl -ko SlateDark.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/SlateDark.vim
 
 cd ~/.vim
 mkdir syntax
 cd syntax
 
-curl -o proteinfasta.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/proteinfasta.vim
-curl -o txt.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/txt.vim
+curl -ko proteinFasta.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/proteinFasta.vim
+curl -ko txt.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/txt.vim
 </pre>
 
 === Windows Installation ===
@@ -217,7 +217,7 @@ cd %userprofile%\vimfiles
 mkdir syntax
 cd syntax
 
-curl -ko proteinfasta.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/proteinfasta.vim
+curl -ko proteinFasta.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/proteinFasta.vim
 curl -ko txt.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/txt.vim
 </pre>
 
