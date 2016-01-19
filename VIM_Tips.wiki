@@ -22,16 +22,19 @@ On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
 
 === By character ===
 
- fx   To [count]'th occurrence of x to the right (allows [a-zA-Z0-9])
- Fx   To [count]'th occurrence of x to the left
+ fx    To next occurrence of x to the right (allows [a-zA-Z0-9])
+ Fx    To next occurrence of x to the left
 
- tx   Till before [count]'th occurrence of x to the right
- Tx   Till before [count]'th occurrence of x to the left
+ 4fx   To 4th occurrence of x to the right
+ 3Fx   To 3rd occurrence of x to the left
 
- ;    Repeat the latest f or t [count] times (on the same line)
- ,    Repeat the latest f or t [count] times in the opposite direction (on the same line)
+ tx    Till before next occurrence of x to the right
+ Tx    Till before next occurrence of x to the left
 
- %    To matching marker, one of ([{}]) or /* */ or #if #endif
+ ;     Repeat the latest f or t [count] times (on the same line)
+ ,     Repeat the latest f or t [count] times in the opposite direction (on the same line)
+
+ %     To matching marker, one of ([{}]) or /* */ or #if #endif
 
  [(   Go to previous unmatched (
  [{   Go to previous unmatched {
@@ -78,7 +81,8 @@ On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
  512go    Go to byte 512
 
  g <Ctrl+g>    View current position in status line
-              In Visual mode, shows the size of the block
+               In Visual mode, shows the size of the block
+
 === By marker ===
 
  mx         Set a mark named x
@@ -128,27 +132,33 @@ On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
 All insertion commands are terminated with <Esc> to return to command mode.
 
  i       Insert text at cursor
+ 10i     Repeat whatever is typed 10 times
  I       Insert text at start of line
  a       Append text after cursor
  A       Append text after end of line
  o       Open new line below
  O       Open new line above
 
-This command requires a .vimrc overrides as shown
- <Shift+Enter>      Enter a blank line above the current line; map <S-Enter> O<ESC>
+Command defined in .vimrc to insert a blank line above the cursor
+ <Shift+Enter>      Enable with: map <S-Enter> O<ESC>
 
 == Changing ==
 
 Changing means to delete the characer, word, line, etc. and enter Insert mode.
 The deleted item does get placed into the paste buffer
 
- r          Replace single character; R replace multiple characters
- s          Change single character
- cw         Change word
- C          Change to end of line
- cc         Change whole line (delete the line and enter insert mode)
- c<motion>  Changes text in the direction of the motion
- ci(        Change inside parentheses (see text object selection for more examples)
+ r           Replace single character; R replace multiple characters
+ 15rx        Change 15 characters to x, starting at the cursor
+ s           Change single character
+ cw          Change word
+ C           Change to end of line
+ c<motion>   Changes text in the direction of the motion
+ c$          Change to end of line
+ c^          Change to beginning of line
+ cc          Change whole line (delete the line and enter insert mode)
+ ci(         Change inside parentheses
+ ca(         Change around parentheses (delete text within the parentheses, then enter insert mode)
+ ct<letter>  Change to letter: change from current character to the next occurrence of the letter
 
 == Deleting ==
 
@@ -156,16 +166,20 @@ Deleting deletes the item, but does not enter insert mode
 The deleted item does get placed into the paste buffer
 
  x            Delete single char
+ 20x          Delete 20 characters
  dw           Delete word
  D            Delete to end of line
+ d$           Delete to end of line
  dd           Delete whole line
 
  d<motion>    Deletes in the direction of the motion, e.g. d$ or d0
-             In visual mode, d deletes the current selection
- d$           Delete to end of line
+              In visual mode, d deletes the current selection
  d0           Delete to start of line
  d^           Delete to start of line
  d4j          Delete from here through 4 lines down
+ di(          Delete inside parentheses
+ da(          Delete around parentheses (delete all text within the parentheses and remove them)
+ dt<letter> Delete to letter: delete from current character to the next occurrence of the letter
 
 == Cut and paste (put) ==
 
@@ -210,12 +224,15 @@ Named registers a-z only populate when explictly used.  Use A-Z to append
 
 == Sorting ==
 
- :[range]sor[t]    Sort lines in [range].  If no range, then sort all lines
+ :[range]sor[t]    Sort lines in [range].  If no range, sort all lines
  :1,50sor          Sort lines 1 to 50
  :1,50sor!         Reverse sort lines 1 to 50
  :1,50sor i        Ignore case
  :1,50sor n        Sort by number
  :1,50sor u        Remove duplicates
+ :10,$sor          Sort from line 10 to the end
+ :.,$sor           Sort from the current line to the end
+ :.+1,$sor         Sort from the next line to the end
 
  :sort /{pattern}/      Begin sorting after the match to a pattern
  :sort /.*\%10v/        Sort starting at virtual column 10
@@ -224,10 +241,16 @@ Named registers a-z only populate when explictly used.  Use A-Z to append
 
 == Case ==
 
- ~     Change case of single character
- g~    Swap case
- gu    Make lowercase
- gU    Make uppercase
+ ~             Change case of single character
+ 15~           Change the case of 15 characters
+ g~<motion>    Swap case in the specified direction
+ gu<motion>    Make lowercase
+ gU<motion>    Make uppercase
+
+ 20g~l         Swap case of 20 characters to the right
+ 20g~h         Swap case of 20 characters to the left
+ 15gUl         Make this line and the next 15 characters uppercase to the right
+ 5gUj          Make this line and the next 5 lines uppercase
 
 == Macros ==
 
@@ -240,7 +263,6 @@ Named registers a-z only populate when explictly used.  Use A-Z to append
 To edit a macro, paste it into a new buffer, then update the register:
 
  :new      New buffer
- :enew     New file in the current buffer (use :enew! to discard changes)
  "xp       Paste register x into the buffer
  [edit the keystrokes]
  <Esc>     Return to normal mode
@@ -259,9 +281,9 @@ To select a block with the mouse use Alt+LeftClick
  v          Visual block stream
  V          Visual block line
  <CTRL+v>   Visual block column 
-            Alternatively, <CTRL+q> when CTRL+v is paste
-            I have mapped Q to Visual Block using _vimrc
-            Alternatively, use Ctrl+LeftClick 
+            Alternatively, <CTRL+q> when CTRL+v is mapped to paste
+            Defined in .vimrc with: nnoremap Q <C-v>
+            Alternatively, use Alt+LeftClick 
  <CTRL+g>   Toggle between visual mode and select mode
  most motion commands extend the block to the new cursor position
 
@@ -293,6 +315,11 @@ To select a block with the mouse use Alt+LeftClick
  N           Next match in opposite direction
  /http:\/\/  Search for http://
 
+ :noh        Disable highlighting of the matches (temporarily)
+
+.vimrc setting to disable highlighting of search matches (temporarily); type \ then a space
+ nnoremap <leader><space> :noh<cr>   
+
 == Replacing ==
 
  :s/this/that/             Replace this with that; only changes the first match of the current line (or of selected lines)
@@ -308,7 +335,10 @@ To select a block with the mouse use Alt+LeftClick
 
 == Global Replace ==
 
- :%s/foo/bar/g         Substitute all occurrences of "foo" to "bar"
+ :%s/foo/bar/g         Substitute all occurrences of "foo" to "bar", on all lines
+ :.,$s/foo/bar/g       Substitute all occurrences of "foo" to "bar", from the current line to the end
+ :10,20s/foo/bar/g     Substitute all occurrences of "foo" to "bar", on lines 10 through 20
+
  :%s/this/that/gc      Ask for confirmation for each; "q" to quit the search/replace
 
  :%s/\(\d\+\)/\1,/gc   Find all sequential numbers (\d\+) and add a comma after them
@@ -430,12 +460,18 @@ Examples:
 == Windows ==
 
  <CTRL+w>s           Split window
+ <CTRL+w>v           Vertical split the window
  <CTRL+w>n           New window
- <CTRL+w>j           Down to next window;
- <CTRL+w>k           Up to previous window
+ <CTRL+w>j           Down to next window of horizontal split
+ <CTRL+w>k           Up to previous window of horizontal split
+ <CTRL+w>h           Over to left window of vertical split
+ <CTRL+w>l           Over to right window of vertical split
  <CTRL+w>p           Previous window
  <CTRL+w>w           Next window (same as <CTRL+w><CTRL+w>; Ctrl+Tab works with gvim)
  <CTRL+w>c           Close the window (same as :q)
+
+Defined in .vimrc so that \ then v creates a new vertical split and moves to it
+ nnoremap <leader>v <C-w>v<C-w>l
 
  <CTRL+w>_           Maximise current window
  <CTRL+w>=           Make all windows equal size
@@ -450,16 +486,31 @@ Examples:
  <CTRL+w>H           Go from horizontal to vertical layout (use capital H)
  <CTRL+w>J           Go from vertical to horizontal layout (use capital J)
 
+ :new                New buffer
+ :enew               New file in the current buffer (use :enew! to discard changes)
+
  :tabe               Create a new tab
  :tab new            Create a new tab
- :tabnew             Open a file in a new tab (file dialog box is shown)
+ :tabnew             Create a new tab 
+
  Ctrl+PageUp         Next tab
+ gt                  Next tab
+ 2gt                 Go to tab #2
  Ctrl+PageDown       Previous tab
+ gT                  Previous tab
+ :tabr[ewind]        Go to the first tab
+ :tabl[ast]          Go to the last tab
+ :tabm[ove] [N]      Move the tab to after tab page N (or to the end with N)
+ :+tabm              Move the tab to the right
+ :-tabm              Move the tab to the left
+
+ :windo {cmd}        Perform the specified command on each window.  Use | for a series of commands
+ :tabdo {cmd}        Perform the specified command on each tab.
 
 == Source Navigation ==
 
  %                   Jump to matching parenthesis/bracket/brace, or language block if language module loaded
- gd                  Go to definition of local symbol under cursor;
+ gd                  Go to definition of local symbol under cursor: jumps to first occurrence of the word in the file
  <CTRL+]>            Jump to definition of global symbol (requires tags file)
  <CTRL+t>            Return to previous position (arbitrary stack of positions maintained)
  <CTRL+n>            (in insert mode) automatic word completion
@@ -472,9 +523,12 @@ Vim auto-selects the highlighting method based on the file extension.  To overri
 
  :syn list           View current syntax rules; use d and u to move down and up
  :syn clear          Turn off highlighting
- :e                  Refresh (reload) the file to re-enable default highlighting
+ :syn on             Turn on highlighting
 
  :hi[light]          List all highlight groups; use d and u to move down and up
+
+ :set syntax=c       Use the c syntax rules
+ :set showmatch      When a bracket is typed, briefly jump to the matching bracket (if visible on the screen)
 
 === Diagnosing Performance ===
 
@@ -483,6 +537,13 @@ Use :syntime to find out what patterns are consuming most time
  :syntime on
  [ redraw the text at least once with CTRL-L ]
  :syntime report
+
+== Line Numbers and Line Highlighting ==
+
+ :set nu[mber]       Show line numbers
+ :set nonu[mber]     Disable line numbers
+ :set cursorline     Highlight the current line
+ :set nocul          Disable highlighting the line
 
 == Show local changes ==
 
@@ -497,10 +558,12 @@ Set the wrap width:
 Optionally define this in vimrc on a file-type basis
  au BufRead,BufNewFile *.txt setlocal textwidth=80
 
-To wrap existing lines, select them with V (or with the mouse)
-then type gq
+To wrap existing lines, select them with V (or with the mouse) then type:
+ gq
 
-To join two lines together, use J.
+To join two lines together, use:
+ J
+
 A space will be added between the two joined lines
 
  :Comma    Call a custom function (defined in _vimrc) to add a comma to each line
