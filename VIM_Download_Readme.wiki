@@ -2,25 +2,26 @@
 
 gVIM Installer
 http://www.vim.org/download.php
+* Choose the "latest version" link, for example ftp://ftp.vim.org/pub/vim/pc/gvim74-1024.exe
 
 Latest 64-bit version (auto-compiled)
-https://tuxproject.de/projects/vim/
+* https://tuxproject.de/projects/vim/
 
 === Installation Steps ===
 
-1. Download the "self-installing executable" from http://www.vim.org/download.php
-* This is 32-bit gVIM, compiled in 2013
+1. Download the "latest version " from http://www.vim.org/download.php
+* This is 32-bit gVIM, compiled in 2016
 
 2. Double click gvim74.exe
 
 3. Dialog says "This will install Vim 7.4 on your computer. Continue?"  Click Yes
 
 4. Uninstall everything, but do not delete "C:\Program Files\Vim" because it has _vimrc
-* This is a hard-linked file:  "C:\Program Files (x86)\Vim\_vimrc" <--> c:\users\d3l243\_vimrc
+* This is a hard-linked file:  "C:\Program Files (x86)\Vim\_vimrc" <--> c:\users\username\_vimrc
 * Created using:
 
  cd C:\Program Files\Vim
- mklink /h _vimrc c:\users\d3l243\_vimrc
+ mklink /h _vimrc %userprofile%\_vimrc
 
 * This was done because gvim first looks for a _vimrc file at ~
 * And also so that VisVim (for Visual Studio) could read it
@@ -48,9 +49,9 @@ https://tuxproject.de/projects/vim/
 
 13. The program should start and report version 7.4.1089
 
-14. Customize your _vimrc file, see folder c:\users\d3l243
+14. Customize your _vimrc file, see folder %userprofile%
 
-15. Copy customized plugins and syntax files to  c:\users\d3l243\vimfiles
+15. Copy customized plugins and syntax files to  %userprofile%\vimfiles
 
 16. Edit the registry to make it so that files double clicked in explorer open in a new tab
 * Go to key HKEY_CLASSES_ROOT\Applications\gvim.exe\shell\edit\command and set the Value Data to
@@ -210,14 +211,14 @@ cd %userprofile%\vimfiles
 mkdir colors
 cd colors
 
-curl -o SlateDark.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/SlateDark.vim
-
+curl -ko SlateDark.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/colors/SlateDark.vim
+                        
 cd %userprofile%\vimfiles
 mkdir syntax
 cd syntax
 
-curl -o proteinfasta.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/proteinfasta.vim
-curl -o txt.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/txt.vim
+curl -ko proteinfasta.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/proteinfasta.vim
+curl -ko txt.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/txt.vim
 </pre>
 
 === Generate Plugin Docs ===
