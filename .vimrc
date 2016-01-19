@@ -139,7 +139,7 @@ set report=0          " When doing substitutions, report the number of changes
 set showmode          " Show Insert or Visual at the bottom
 set showcmd           " Show the partial command name at the bottom
 set hidden            " Hide closed buffers instead of unloading them
-set ttyfast
+set nottyfast
 
 " Show menu on double-tab command completion;
 " for example, type :win then press tab twice
