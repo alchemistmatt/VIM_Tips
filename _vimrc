@@ -3,6 +3,10 @@ if v:progname =~? "evim"
     finish
 endif
 
+filetype off
+call pathogen#infect()
+filetype plugin indent on
+
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -58,6 +62,9 @@ set incsearch		" do incremental searching
 " This is required for vim-airline to work
 set laststatus=2
 
+" View relative line numbers to the left
+set relativenumber
+
 " Simple status line that just shows filename:
 " set statusline=%f "tail of the filename
 
@@ -99,12 +106,13 @@ if &t_Co > 2 || has("gui_running")
     set hlsearch
 endif
 
-colorscheme SlateDark 
+colorscheme SlateDark
 
 set ignorecase        " Ignore case in regex searches
 set smartcase         " Enable case-sensitive search if capitals are present
 set nowrap            " Do not wrap lines longer than the window
-set guioptions+=b      " Show the horizontal scrollbar
+set guioptions+=b     " Show the horizontal scrollbar
+set gdefault          " imply the use of g when searching (replace all matches on a line)
 
 " Define the window size
 set co=162
@@ -130,6 +138,8 @@ set report=0          " When doing substitutions, report the number of changes
 
 set showmode          " Show Insert or Visual at the bottom
 set showcmd           " Show the partial command name at the bottom
+set hidden            " Hide closed buffers instead of unloading them
+set ttyfast
 
 " Show menu on double-tab command completion;
 " for example, type :win then press tab twice
@@ -157,11 +167,14 @@ unmap <C-Y>
 " which enables RegEx mode by default in s/find/replace/ operations
 " But this makes it harder to scrollup to see recent / searches, so not
 " enabled
-" nnoremap / /\v
-" vnoremap / /\v
+nnoremap / /\v
+vnoremap / /\v
 
 " Disable highlighting of search matches (temporarily); type \ then a space
 nnoremap <leader><space> :noh<cr>
+
+" Shortcut to remove trailing whitespace
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 " Add option to press F11 to toggle viewing whitespace chars
 " From http://stackoverflow.com/questions/4998582/show-whitespace-characters-in-gvim
@@ -177,15 +190,21 @@ nnoremap Q <C-v>
 " Make ; behave like : to make entering commands easier
 nnoremap ; :
 
+" Shortcuts for YankRing
+nnoremap <silent> <F3> :YRShow<cr>
+inoremap <silent> <F3> <ESC>:YRShow<cr>
+
 " Configure formatting of trailing spaces and tab
 " To highligh carriage returns with $ use:
 " eol:$
 set listchars=tab:>-,trail:.,extends:>,precedes:<,nbsp:_
+set nolist
+
 highlight SpecialKey term=standout ctermbg=yellow guibg=yellow
 highlight RedundantSpaces term=standout ctermbg=Grey guibg=#ffddcc
 call matchadd('RedundantSpaces', '\(\s\+$\| \+\ze\t\|\t\zs \+\)\(\%#\)\@!')
 
-" Optional: Change the default leader from \ to a comma
+" Optional: change the default leader from \ to a comma
 " By default comma means "repeat the most recent f or t search for a character, looking left"
 " Defining the comma as the leader will override the default behavior
 " let mapleader = ","
@@ -193,7 +212,7 @@ call matchadd('RedundantSpaces', '\(\s\+$\| \+\ze\t\|\t\zs \+\)\(\%#\)\@!')
 " Optional: make Leader then "l" be the same as <Ctrl+w>w  (to move to the next window)
 " nmap <leader>l <C-w>w
 
-" Open a vertical split and switch over to the new window (\v)
+" Open a vertical split and switch over to the new window (\v or ,v)
 nnoremap <leader>v <C-w>v<C-w>l
 
 " Split windows below the current window.
@@ -203,7 +222,7 @@ set splitbelow
 iabbrev adn and
 iabbrev waht what
 
-" Define commands to format html or xml with tidy 
+" Define commands to format html or xml with tidy
 " (put tidy in a folder in your path)
 :command Thtm  :%!tidy -q -i --tidy-mark 0      2>/dev/null<CR>
 :command Txml  :%!tidy -q -i --tidy-mark 0 -xml 2>/dev/null<CR>
@@ -221,7 +240,7 @@ function CommaJoinLines(addQuotes)
 
 	" Remove trailing whitespace (if any); the e flag means to not issue an
 	" error message if the search has no matches
-	:silent %s/\s$//ge
+	:silent %s/\s\+$//ge
 
 	if (a:addQuotes != 0)
 		" Surround lines with quotes and add a comma

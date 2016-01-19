@@ -57,42 +57,178 @@ https://tuxproject.de/projects/vim/
 
  "C:\Program Files\Vim\vim74\gvim.exe" --remote-tab-silent "%1"
 
+== Pathogen ==
 
-== Plugins ==
+Use Pathogen to load plugins stored in subfolders
+https://github.com/tpope/vim-pathogen
+
+=== Installation on Linux ===
+
+<pre>mkdir -p ~/.vim/autoload ~/.vim/bundle
+curl -LSso ~/.vim/autoload/pathogen.vim https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+</pre>
+
+=== Installation on Windows ===
+
+<pre>mkdir %userprofile%\vimfiles\autoload
+mkdir %userprofile%\vimfiles\bundle
+cd %userprofile%\vimfiles\autoload
+curl -Lko pathogen.vim https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+rem Or use: curl -Lko pathogenAlt.vim https://tpo.pe/pathogen.vim
+</pre>
+
+=== Update .vimrc or _vimrc ===
+
+ execute pathogen#infect()
+
+== Plugins and Syntax Files ==
+
+=== Plugin Descriptions ===
+
+==== Gundo ====
+
+Graphical representaion of your undo history
+http://sjl.bitbucket.org/gundo.vim/
+
+Requires that Vim be compiled with Python 2.4+
+Open gvim.exe in a text editor to determine the expected filenames, for example:
+python27.dll and python35.dll
+
+If using 64-bit Vim, we need 64-bit python.  Install from:
+https://www.python.org/downloads/windows/
+* 2.7.x: Windows x86-64 MSI installer
+* 3.5.x: Windows x86-64 executable installer
+
+Possibly also copy the python DLLs to the folder with gvim.exe
+Test if python is working using
+ :python print(1)
+
+Add to .vimrc:
+ nnoremap <F5> :GundoToggle<CR>
+
+==== MRU ====
+
+Display selectable list of Most Recently Used files
+http://www.vim.org/scripts/script.php?script_id=521
+
+Command:
+ :MRU
+
+==== Reload ====
 
 Automatic reload of modified Vim scripts
 http://peterodding.com/code/vim/reload/
-See also: http://github.com/xolox/vim-reload
 
-Unzip the most recent ZIP archives of the vim-reload and vim-misc plug-ins 
-inside your Vim profile directory (usually this is ~/.vim on UNIX and
- %USERPROFILE%\vimfiles on Windows), restart Vim and execute the command
- :helptags ~/.vim/doc (use :helptags ~\vimfiles\doc instead on Windows)
+After changing your .vimrc file use:
+ :update
 
-Vim-misc: Required by reload.vim
-http://www.vim.org/scripts/script.php?script_id=4597
+==== ScrollColor ====
 
-Xolox: required by reload.vim
-https://github.com/xolox/vim-reload
-
-MRU: Display selectable list of Most Recently Used files
-http://www.vim.org/scripts/script.php?script_id=521
-
-ScrollColors: Easily scroll through color schemes
+Easily scroll through color schemes
 http://www.vim.org/scripts/script.php?script_id=1488
 
-VIM-Airline
+Commands:
+ :SCROLL
+ :COLOR
+
+==== VIM-Airline ====
+
+Advanced status bar
 http://vimawesome.com/plugin/vim-airline-sad-beautiful-tragic
- git clone https://github.com/bling/vim-airline
 
-== Syntax Files ==
+==== YankRing ====
 
-txt.vim
-http://www.vim.org/scripts/script.php?script_id=1532
+Easily access copied (yanked) or deleted text
+http://www.vim.org/scripts/script.php?script_id=1234
 
-mediawiki.vim
-https://github.com/chikamichi/mediawiki.vim/blob/master/syntax/mediawiki.vim
-(click on Raw)
+Add to .vimrc:
+
+ nnoremap <silent> <F3> :YRShow<cr>
+ inoremap <silent> <F3> <ESC>:YRShow<cr>
+
+Also, after pasting text, use Ctrl+P and Ctrl+N to cycle through recent buffers
+ 
+==== Syntax Files ====
+
+txt.vim: http://www.vim.org/scripts/script.php?script_id=1532
+* Updated version at https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/txt.vim
+
+mediawiki.vim: https://github.com/chikamichi/mediawiki.vim/
+
+=== Unix Installation ===
+
+<pre>cd ~/.vim/bundle/
+git clone https://github.com/sjl/gundo.vim.git gundo
+git clone https://github.com/xolox/vim-reload vim-reload
+git clone https://github.com/xolox/vim-misc vim-misc
+git clone https://github.com/yegappan/mru mru
+git clone https://github.com/bling/vim-airline vim-airline
+git clone https://github.com/chikamichi/mediawiki.vim/ mediawiki.vim
+
+curl -o yankring_190.zip http://www.vim.org/scripts/download_script.php?src_id=23487
+unzip -d yankring yankring_190.zip
+
+curl -o ScrollColor.vim http://www.vim.org/scripts/download_script.php?src_id=5966
+mkdir scrollcolor
+mkdir scrollcolor\plugin
+mv ScrollColor.vim scrollcolor\plugin
+
+cd ~/.vim
+mkdir colors
+cd colors
+
+curl -o SlateDark.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/SlateDark.vim
+
+cd ~/.vim
+mkdir syntax
+cd syntax
+
+curl -o proteinfasta.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/proteinfasta.vim
+curl -o txt.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/txt.vim
+</pre>
+
+=== Windows Installation ===
+
+<pre>c:
+cd %userprofile%\vimfiles\bundle
+git clone http://github.com/sjl/gundo.vim.git gundo
+git clone http://github.com/xolox/vim-reload vim-reload
+git clone http://github.com/xolox/vim-misc vim-misc
+git clone http://github.com/yegappan/mru mru
+git clone https://github.com/bling/vim-airline vim-airline
+git clone https://github.com/chikamichi/mediawiki.vim/ mediawiki.vim
+
+curl -o yankring_190.zip http://www.vim.org/scripts/download_script.php?src_id=23487
+unzip -d yankring yankring_190.zip
+
+curl -o ScrollColor.vim http://www.vim.org/scripts/download_script.php?src_id=5966
+mkdir scrollcolor
+mkdir scrollcolor\plugin
+move ScrollColor.vim scrollcolor\plugin
+
+cd %userprofile%\vimfiles
+mkdir colors
+cd colors
+
+curl -o SlateDark.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/SlateDark.vim
+
+cd %userprofile%\vimfiles
+mkdir syntax
+cd syntax
+
+curl -o proteinfasta.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/proteinfasta.vim
+curl -o txt.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/txt.vim
+</pre>
+
+=== Generate Plugin Docs ===
+
+This pathogen command generates help files for your plugins
+ :Helptags
+
+This is an alternative to
+ :helptags ~/.vim/doc
+or
+ :helptags ~\vimfiles\doc
 
 == Color Schemes ==
 
