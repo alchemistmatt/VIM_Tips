@@ -24,7 +24,9 @@ shopt -s nocaseglob       # case-insenstive match to:         cd ap*<enter>
 # User specific aliases and functions
 
 alias ls='ls -alF --color=tty'
-alias ftp='echo Use lftp'
+alias lsd='ls -alF --color=tty --sort=time --reverse'
+alias edit='nano'
+alias ftp='echo Use scp or lftp'
 alias cd..='cd ..'
 
 PS1='[\u@\h \w]\$ '

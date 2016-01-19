@@ -27,7 +27,7 @@ set backspace=indent,eol,start
 set nostartofline
 
 if has("vms")
-    set nobackup		" do not keep a backup file, use versions instead
+    set nobackup	" do not keep a backup file, use versions instead
 else
     set backup		" keep a backup file (restore to previous version)
 
@@ -52,7 +52,7 @@ set swapfile
 
 set history=150		" keep 150 lines of command line history
 set ruler           " show the cursor position all the time
-set showcmd         " show commands as they're typed 
+set showcmd         " show commands as they're typed
 set incsearch		" do incremental searching
 
 " This is required for vim-airline to work
@@ -77,8 +77,8 @@ set laststatus=2
 " set statusline+=%b,0x%-8B\                   " current char
 " set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
+" CTRL+U in insert mode deletes a lot.  Use CTRL-G u to
+" create a new undo point prior to performing the requested undo
 inoremap <C-U> <C-G>u<C-U>
 
 " In many terminal emulators the mouse works just fine, could enable it
@@ -117,7 +117,9 @@ set tabstop=4         " Set the tabstop to 4 spaces
 set shiftwidth=4      " Shiftwidth should match tabstop
 set softtabstop=4
 
-set gfn=consolas:h11  " Consolas, 11 point
+set gfn=consolas:h11  " Consolas, 11 point (guifont)
+
+set scrolloff=3       " Keep 3 lines visible at the top or bottom when scrolling
 
 " Uncomment to enable smart-indenting for all files
 " Otherwise, it is extension specific
@@ -125,6 +127,9 @@ set gfn=consolas:h11  " Consolas, 11 point
 "set autoindent
 
 set report=0          " When doing substitutions, report the number of changes
+
+set showmode          " Show Insert or Visual at the bottom
+set showcmd           " Show the partial command name at the bottom
 
 " Show menu on double-tab command completion;
 " for example, type :win then press tab twice
@@ -155,6 +160,9 @@ unmap <C-Y>
 " nnoremap / /\v
 " vnoremap / /\v
 
+" Disable highlighting of search matches (temporarily); type \ then a space
+nnoremap <leader><space> :noh<cr>
+
 " Add option to press F11 to toggle viewing whitespace chars
 " From http://stackoverflow.com/questions/4998582/show-whitespace-characters-in-gvim
 noremap <F11> :set list!<CR>:set list?<CR>
@@ -166,6 +174,9 @@ nnoremap N Nzz
 " Change Q to enter Visual Block Mode
 nnoremap Q <C-v>
 
+" Make ; behave like : to make entering commands easier
+nnoremap ; :
+
 " Configure formatting of trailing spaces and tab
 " To highligh carriage returns with $ use:
 " eol:$
@@ -174,17 +185,23 @@ highlight SpecialKey term=standout ctermbg=yellow guibg=yellow
 highlight RedundantSpaces term=standout ctermbg=Grey guibg=#ffddcc
 call matchadd('RedundantSpaces', '\(\s\+$\| \+\ze\t\|\t\zs \+\)\(\%#\)\@!')
 
-" Optional: Change the default mapleader from \ to a comma
+" Optional: Change the default leader from \ to a comma
+" By default comma means "repeat the most recent f or t search for a character, looking left"
+" Defining the comma as the leader will override the default behavior
 " let mapleader = ","
 "
-" Optional: make ",l" (aka comma then lowercase l) be the same as <Ctrl+w>w  (to move to the next window)
-" nmap <Leader>l <C-w>w
+" Optional: make Leader then "l" be the same as <Ctrl+w>w  (to move to the next window)
+" nmap <leader>l <C-w>w
 
-" Open a vertical split and switches over (\v)
+" Open a vertical split and switch over to the new window (\v)
 nnoremap <leader>v <C-w>v<C-w>l
 
 " Split windows below the current window.
 set splitbelow
+
+" Abbreviations
+iabbrev adn and
+iabbrev waht what
 
 " Define commands to format html or xml with tidy 
 " (put tidy in a folder in your path)
@@ -277,8 +294,8 @@ endif " has("autocmd")
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 if !exists(":DiffOrig")
-    command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
+   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+		\ | wincmd p | diffthis
 endif
 
 if has('langmap') && exists('+langnoremap')
