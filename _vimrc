@@ -52,7 +52,7 @@ set swapfile
 " Default location for the swap file
 "  on Windows: ".,$TEMP,c:\tmp,c:\temp"
 "  on Unix:    ".,~/tmp,/var/tmp,/tmp"
-" Override with set directory=path1,path2
+set directory=$TEMP,c:\temp\,c:\tmp,.
 
 set history=150		" keep 150 lines of command line history
 set ruler           " show the cursor position all the time
@@ -138,7 +138,7 @@ set report=0          " When doing substitutions, report the number of changes
 
 set showmode          " Show Insert or Visual at the bottom
 set showcmd           " Show the partial command name at the bottom
-set hidden            " Hide closed buffers instead of unloading them
+set hidden            " Hide buffers closed with :q instead of unloading them
 set ttyfast
 
 " Show menu on double-tab command completion;
@@ -170,11 +170,34 @@ unmap <C-Y>
 nnoremap / /\v
 vnoremap / /\v
 
+" Optional: change the default leader from \ to a comma
+" By default comma means "repeat the most recent f or t search for a character, looking left"
+" Defining the comma as the leader will override the default behavior
+" let mapleader = ","
+"
+" Optional: make Leader then "l" be the same as <Ctrl+w>w  (to move to the next window)
+" nmap <leader>l <C-w>w
+
+" Open a vertical split and switch over to the new window (\v or ,v)
+nnoremap <leader>v <C-w>v<C-w>l
+
 " Disable highlighting of search matches (temporarily); type \ then a space
 nnoremap <leader><space> :noh<cr>
 
+" Create a new tab with <Leader> n or <Leader> t
+nnoremap <leader>n :tabnew<CR>
+nnoremap <leader>t :tabnew<CR>
+
+" Change all buffers to tabs
+" Conversely, show all buffers together with :sball
+nnoremap <leader>T :tab sball<CR>
+
 " Shortcut to remove trailing whitespace
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+" Shortcut to change the working directory
+" To see the current working directory, use :cd
+nnoremap <leader>O :cd %:p:h<CR>:pwd<CR>
 
 " Add option to press F11 to toggle viewing whitespace chars
 " From http://stackoverflow.com/questions/4998582/show-whitespace-characters-in-gvim
@@ -187,8 +210,9 @@ nnoremap N Nzz
 " Change Q to enter Visual Block Mode
 nnoremap Q <C-v>
 
-" Make ; behave like : to make entering commands easier
-nnoremap ; :
+" Optionaly make ; behave like : to make entering commands easier
+" Downside is that ; means to repeat the last character search with f
+" nnoremap ; :
 
 " Shortcuts for YankRing
 nnoremap <silent> <F3> :YRShow<cr>
@@ -204,17 +228,6 @@ highlight SpecialKey term=standout ctermbg=yellow guibg=yellow
 highlight RedundantSpaces term=standout ctermbg=Grey guibg=#ffddcc
 call matchadd('RedundantSpaces', '\(\s\+$\| \+\ze\t\|\t\zs \+\)\(\%#\)\@!')
 
-" Optional: change the default leader from \ to a comma
-" By default comma means "repeat the most recent f or t search for a character, looking left"
-" Defining the comma as the leader will override the default behavior
-" let mapleader = ","
-"
-" Optional: make Leader then "l" be the same as <Ctrl+w>w  (to move to the next window)
-" nmap <leader>l <C-w>w
-
-" Open a vertical split and switch over to the new window (\v or ,v)
-nnoremap <leader>v <C-w>v<C-w>l
-
 " Split windows below the current window.
 set splitbelow
 
@@ -224,17 +237,17 @@ iabbrev waht what
 
 " Define commands to format html or xml with tidy
 " (put tidy in a folder in your path)
-:command Thtm  :%!tidy -q -i --tidy-mark 0      2>/dev/null<CR>
-:command Txml  :%!tidy -q -i --tidy-mark 0 -xml 2>/dev/null<CR>
+:command! Thtm  :%!tidy -q -i --tidy-mark 0      2>/dev/null<CR>
+:command! Txml  :%!tidy -q -i --tidy-mark 0 -xml 2>/dev/null<CR>
 
 " Define a command to add a comma to each line
-:command Comma call CommaJoinLines(0)
+:command! Comma call CommaJoinLines(0)
 
 " Define a command to surround each line with single quotes, then add a comma
-:command Commaq call CommaJoinLines(1)
+:command! Commaq call CommaJoinLines(1)
 
 " This function is used by Joinc and Joinq
-function CommaJoinLines(addQuotes)
+function! CommaJoinLines(addQuotes)
 	" Remove blank lines
 	:silent g/^\s*$/d
 
@@ -252,6 +265,9 @@ function CommaJoinLines(addQuotes)
 
 	" Remove the final comma
 	:silent s/,\s*$//
+
+	" Copy the entire file to the clipboard
+	:%y+
 
 endfunction
 
@@ -271,6 +287,7 @@ if has("autocmd")
 
 		" Turn on expandtab for several file types
 		:autocmd BufNewFile,BufRead *.cs set expandtab
+		:autocmd BufNewFile,BufRead *.java set expandtab
 		:autocmd BufNewFile,BufRead *.vb set expandtab
 		:autocmd BufNewFile,BufRead *.wiki set expandtab
 
@@ -299,8 +316,16 @@ if has("autocmd")
         :autocmd BufNewFile,BufRead MzRef*.txt set filetype=R
         :autocmd BufNewFile,BufRead ProMex*.txt set filetype=R
 
-		" Disable auto-commenting for all files
+		" Disable auto-formatting of comments for all files
+		" Change affects both typing and pasting
 		:autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+		" Auto-reload the .vimrc file if it changes
+		augroup reload_vimrc " {
+			autocmd!
+			autocmd BufWritePost $MYVIMRC source $MYVIMRC
+		augroup END " }
+
 	endif
 else
 
@@ -313,8 +338,8 @@ endif " has("autocmd")
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 if !exists(":DiffOrig")
-   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-		\ | wincmd p | diffthis
+    command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
 endif
 
 if has('langmap') && exists('+langnoremap')

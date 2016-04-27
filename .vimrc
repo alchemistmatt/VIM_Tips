@@ -31,7 +31,7 @@ set backspace=indent,eol,start
 set nostartofline
 
 if has("vms")
-    set nobackup		" do not keep a backup file, use versions instead
+    set nobackup	" do not keep a backup file, use versions instead
 else
     set backup		" keep a backup file (restore to previous version)
 
@@ -56,7 +56,7 @@ set swapfile
 
 set history=150		" keep 150 lines of command line history
 set ruler           " show the cursor position all the time
-set showcmd         " show commands as they're typed 
+set showcmd         " show commands as they're typed
 set incsearch		" do incremental searching
 
 " This is required for vim-airline to work
@@ -111,7 +111,7 @@ colorscheme SlateDark
 set ignorecase        " Ignore case in regex searches
 set smartcase         " Enable case-sensitive search if capitals are present
 set nowrap            " Do not wrap lines longer than the window
-set guioptions+=b      " Show the horizontal scrollbar
+set guioptions+=b     " Show the horizontal scrollbar
 set gdefault          " imply the use of g when searching (replace all matches on a line)
 
 " Define the window size
@@ -138,8 +138,8 @@ set report=0          " When doing substitutions, report the number of changes
 
 set showmode          " Show Insert or Visual at the bottom
 set showcmd           " Show the partial command name at the bottom
-set hidden            " Hide closed buffers instead of unloading them
-set nottyfast
+set hidden            " Hide buffers closed with :q instead of unloading them
+set ttyfast
 
 " Show menu on double-tab command completion;
 " for example, type :win then press tab twice
@@ -170,11 +170,34 @@ map <S-Enter> O<ESC>
 nnoremap / /\v
 vnoremap / /\v
 
+" Optional: change the default leader from \ to a comma
+" By default comma means "repeat the most recent f or t search for a character, looking left"
+" Defining the comma as the leader will override the default behavior
+" let mapleader = ","
+"
+" Optional: make Leader then "l" be the same as <Ctrl+w>w  (to move to the next window)
+" nmap <leader>l <C-w>w
+
+" Open a vertical split and switch over to the new window (\v or ,v)
+nnoremap <leader>v <C-w>v<C-w>l
+
 " Disable highlighting of search matches (temporarily); type \ then a space
 nnoremap <leader><space> :noh<cr>
 
+" Create a new tab with <Leader> n or <Leader> t
+nnoremap <leader>n :tabnew<CR>
+nnoremap <leader>t :tabnew<CR>
+
+" Change all buffers to tabs
+" Conversely, show all buffers together with :sball
+nnoremap <leader>T :tab sball<CR>
+
 " Shortcut to remove trailing whitespace
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+" Shortcut to change the working directory
+" To see the current working directory, use :cd
+nnoremap <leader>O :cd %:p:h<CR>:pwd<CR>
 
 " Add option to press F11 to toggle viewing whitespace chars
 " From http://stackoverflow.com/questions/4998582/show-whitespace-characters-in-gvim
@@ -187,8 +210,9 @@ nnoremap N Nzz
 " Change Q to enter Visual Block Mode
 nnoremap Q <C-v>
 
-" Make ; behave like : to make entering commands easier
-nnoremap ; :
+" Optionaly make ; behave like : to make entering commands easier
+" Downside is that ; means to repeat the last character search with f
+" nnoremap ; :
 
 " Shortcuts for Gundo
 nnoremap <F5> :GundoToggle<CR>
@@ -202,20 +226,10 @@ inoremap <silent> <F3> <ESC>:YRShow<cr>
 " eol:$
 set listchars=tab:>-,trail:.,extends:>,precedes:<,nbsp:_
 set nolist
+
 highlight SpecialKey term=standout ctermbg=yellow guibg=yellow
 highlight RedundantSpaces term=standout ctermbg=Grey guibg=#ffddcc
 call matchadd('RedundantSpaces', '\(\s\+$\| \+\ze\t\|\t\zs \+\)\(\%#\)\@!')
-
-" Optional: Change the default leader from \ to a comma
-" By default comma means "repeat the most recent f or t search for a character, looking left"
-" Defining the comma as the leader will override the default behavior
-" let mapleader = ","
-"
-" Optional: make Leader then "l" be the same as <Ctrl+w>w  (to move to the next window)
-" nmap <leader>l <C-w>w
-
-" Open a vertical split and switch over to the new window (\v or ,v)
-nnoremap <leader>v <C-w>v<C-w>l
 
 " Split windows below the current window.
 set splitbelow
@@ -225,13 +239,13 @@ iabbrev adn and
 iabbrev waht what
 
 " Define a command to add a comma to each line
-:command Comma call CommaJoinLines(0)
+:command! Comma call CommaJoinLines(0)
 
 " Define a command to surround each line with single quotes, then add a comma
-:command Commaq call CommaJoinLines(1)
+:command! Commaq call CommaJoinLines(1)
 
 " This function is used by Joinc and Joinq
-function CommaJoinLines(addQuotes)
+function! CommaJoinLines(addQuotes)
 	" Remove blank lines
 	:silent g/^\s*$/d
 
@@ -268,6 +282,7 @@ if has("autocmd")
 
 		" Turn on expandtab for several file types
 		:autocmd BufNewFile,BufRead *.cs set expandtab
+		:autocmd BufNewFile,BufRead *.java set expandtab
 		:autocmd BufNewFile,BufRead *.vb set expandtab
 		:autocmd BufNewFile,BufRead *.wiki set expandtab
 
@@ -287,7 +302,8 @@ if has("autocmd")
         :autocmd BufNewFile,BufRead *.txt set filetype=txt
 
 
-		" Disable auto-commenting for all files
+		" Disable auto-formatting of comments for all files
+		" Change affects both typing and pasting
 		:autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 	endif
 else
