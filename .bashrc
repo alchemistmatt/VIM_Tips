@@ -29,6 +29,8 @@ alias edit='nano'
 alias ftp='echo Use scp or lftp'
 alias cd..='cd ..'
 
+alias fk='echo sudo $(fc -ln -1) && sudo $(fc -ln -1)'
+
 PS1='[\u@\h \w]\$ '
 export PS1
 
