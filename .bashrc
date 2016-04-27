@@ -19,7 +19,7 @@ HISTFILESIZE=2000
 shopt -s autocd           # Type a directory name and press enter to "cd" into the directory
 shopt -s checkjobs        # Warn of running jobs on logout (suspend task with Ctrl+z and resume with fg)
 shopt -s histverify       # Show command from history with:   !34<enter>
-shopt -s nocaseglob       # case-insenstive match to:         cd ap*<enter>
+shopt -s nocaseglob       # case-insensitive match to:        cd ap*<enter>
 
 # User specific aliases and functions
 
