@@ -1,4 +1,4 @@
-This document of VIM tips was originally inspired by 
+This document of VIM tips was originally inspired by
 http://stackoverflow.com/questions/5400806/what-are-the-most-used-vim-commands-keypresses
 
 The complete VIM manual is available online at
@@ -112,6 +112,7 @@ On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
  zz         Center the cursor line
  H          Top of screen
  L          Bottom of screen
+<CTRL+l>    Redraw the screen
 
 == Editing ==
 
@@ -119,7 +120,7 @@ On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
  <CTRL+r>       Redo
  .              Repeat last editing command
  <CTRL+g> u     While in insert mode, marks a new undo point
- 
+
  :earlier 2m    Undo back to the state 2 minutes ago
  :later 2m      Redo forward in time (2 minutes)
  g-             Previous text state
@@ -280,10 +281,10 @@ To select a block with the mouse use Alt+LeftClick
 
  v          Visual block stream
  V          Visual block line
- <CTRL+v>   Visual block column 
+ <CTRL+v>   Visual block column
             Alternatively, <CTRL+q> when CTRL+v is mapped to paste
             Defined in .vimrc with: nnoremap Q <C-v>
-            Alternatively, use Alt+LeftClick 
+            Alternatively, use Alt+LeftClick
  <CTRL+g>   Toggle between visual mode and select mode
  most motion commands extend the block to the new cursor position
 
@@ -318,7 +319,7 @@ To select a block with the mouse use Alt+LeftClick
  :noh        Disable highlighting of the matches (temporarily)
 
 .vimrc setting to disable highlighting of search matches (temporarily); type \ then a space
- nnoremap <leader><space> :noh<cr>   
+ nnoremap <leader><space> :noh<CR>
 
 == Replacing ==
 
@@ -342,7 +343,7 @@ To select a block with the mouse use Alt+LeftClick
  :%s/this/that/gc      Ask for confirmation for each; "q" to quit the search/replace
 
  :%s/\(\d\+\)/\1,/gc   Find all sequential numbers (\d\+) and add a comma after them
- :%s/\v(\d+)/\1\,/gc   Use \v to remove the need for all of the extra \ characters 
+ :%s/\v(\d+)/\1\,/gc   Use \v to remove the need for all of the extra \ characters
                        (i.e., to tell vim that you are intentially using regex symbols)
 
  :%s/pattern//gn       Count the number of matches (leave out the g to count the lines)
@@ -457,7 +458,7 @@ Examples:
  qb             Query bookmarks
 
 
-== Windows ==
+== Windows, Tabs, and Buffers ==
 
  <CTRL+w>s           Split window
  <CTRL+w>v           Vertical split the window
@@ -470,7 +471,7 @@ Examples:
  <CTRL+w>w           Next window (same as <CTRL+w><CTRL+w>; Ctrl+Tab works with gvim)
  <CTRL+w>c           Close the window (same as :q)
 
-Defined in .vimrc so that \ then v creates a new vertical split and moves to it
+.vimrc setting so that \ then v creates a new vertical split and moves to it
  nnoremap <leader>v <C-w>v<C-w>l
 
  <CTRL+w>_           Maximise current window
@@ -491,7 +492,7 @@ Defined in .vimrc so that \ then v creates a new vertical split and moves to it
 
  :tabe               Create a new tab
  :tab new            Create a new tab
- :tabnew             Create a new tab 
+ :tabnew             Create a new tab
 
  Ctrl+PageUp         Next tab
  gt                  Next tab
@@ -506,6 +507,9 @@ Defined in .vimrc so that \ then v creates a new vertical split and moves to it
 
  :windo {cmd}        Perform the specified command on each window.  Use | for a series of commands
  :tabdo {cmd}        Perform the specified command on each tab.
+
+ :sball              Display all buffers in a horizontal split
+ :tab sball          Convert all buffers to tabs
 
 == Source Navigation ==
 
@@ -592,8 +596,6 @@ VimDiff shows two files side-by-side
 
 == Settings ==
 
- F11                      Toggle showing white space; enabled by adding listchars and highlight lines to .vmrc
-                          Or type :set list!
  :set gdefault?           View the current value for the gdefault setting
  :verbose map <C-Y>       See what the Ctrl+Y key combination is mapped to
  :map                     See key bindings
@@ -601,6 +603,28 @@ VimDiff shows two files side-by-side
  :scriptnames             See loaded scripts, including .vimrc
 
 See the mswin.vim file to see the overridden key combos and find those to remove/tweak
+
+== Shortcuts customized in .vimrc ==
+
+ LeaderKey v            Open a vertical split and switch over to the new window (\v or ,v)
+ LeaderKey n            Create a new tab
+ LeaderKey t            Create a new tab
+ LeaderKey T            Change all buffers to tabs
+
+ F3                     View YankRing buffers
+ LeaderKey N            Cycle through YankRing buffers
+ LeaderKey P            Cycle through YankRing buffers
+
+ LeaderKey O            Change the working directory to use the current file's folder (see :cd)
+
+ LeaderKey <space>      Disable highlighting of search matches (temporarily); type \ then a space
+
+ LeaderKey W            Remove trailing whitespace
+
+ :Comma                 Add a comma to the end of each line
+ :Commaq                Surround each line with single quotes and add a comma
+
+ F11                    Toggle showing white space (see :set list!)
 
 == External Programs ==
 
