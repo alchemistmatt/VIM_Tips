@@ -4,7 +4,7 @@ gVIM Installer
 http://www.vim.org/download.php
 * Choose the "latest version" link, for example ftp://ftp.vim.org/pub/vim/pc/gvim74-1024.exe
 
-Latest 64-bit version (auto-compiled)
+Latest 64-bit version (auto-compiled); python not integrated
 * https://tuxproject.de/projects/vim/
 
 === Installation Steps ===
@@ -65,13 +65,15 @@ https://github.com/tpope/vim-pathogen
 
 === Installation on Linux ===
 
-<pre>mkdir -p ~/.vim/autoload ~/.vim/bundle
+<pre>
+mkdir -p ~/.vim/autoload ~/.vim/bundle
 curl -LSso ~/.vim/autoload/pathogen.vim https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 </pre>
 
 === Installation on Windows ===
 
-<pre>mkdir %userprofile%\vimfiles\autoload
+<pre>
+mkdir %userprofile%\vimfiles\autoload
 mkdir %userprofile%\vimfiles\bundle
 cd %userprofile%\vimfiles\autoload
 curl -Lko pathogen.vim https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim
@@ -120,8 +122,10 @@ Command:
 Automatic reload of modified Vim scripts
 http://peterodding.com/code/vim/reload/
 
-After changing your .vimrc file use:
- :update
+After changing a script file, this plugin auto-reloads it
+and shows a status message saying that it has done so.  To
+force a reload, use
+ :ReloadScript
 
 ==== ScrollColor ====
 
@@ -148,7 +152,7 @@ Add to .vimrc:
  inoremap <silent> <F3> <ESC>:YRShow<cr>
 
 Also, after pasting text, use Ctrl+P and Ctrl+N to cycle through recent buffers
- 
+
 ==== Syntax Files ====
 
 txt.vim: http://www.vim.org/scripts/script.php?script_id=1532
@@ -158,7 +162,8 @@ mediawiki.vim: https://github.com/chikamichi/mediawiki.vim/
 
 === Linux Installation ===
 
-<pre>cd ~/.vim/bundle/
+<pre>
+cd ~/.vim/bundle/
 git clone https://github.com/sjl/gundo.vim.git gundo
 git clone https://github.com/xolox/vim-reload vim-reload
 git clone https://github.com/xolox/vim-misc vim-misc
@@ -190,7 +195,8 @@ curl -ko txt.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master
 
 === Windows Installation ===
 
-<pre>c:
+<pre>
+c:
 cd %userprofile%\vimfiles\bundle
 git clone http://github.com/sjl/gundo.vim.git gundo
 git clone http://github.com/xolox/vim-reload vim-reload
@@ -212,7 +218,7 @@ mkdir colors
 cd colors
 
 curl -ko SlateDark.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/colors/SlateDark.vim
-                        
+
 cd %userprofile%\vimfiles
 mkdir syntax
 cd syntax
