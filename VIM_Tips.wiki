@@ -30,6 +30,7 @@ On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
 
  tx    Till before next occurrence of x to the right
  Tx    Till before next occurrence of x to the left
+ 4tr   Go to the 4th r to the right
 
  ;     Repeat the latest f or t [count] times (on the same line)
  ,     Repeat the latest f or t [count] times in the opposite direction (on the same line)
@@ -108,7 +109,7 @@ On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
  <CTRL+d>   Down half screen
  <CTRL+u>   Up half screen
  <CTRL+e>   Scroll one line up
- <CTRL+y>   Scroll one line down (not on Windows, since Ctrl+y is redo -- todo: fix that)
+ <CTRL+y>   Scroll one line down (not on Windows if Ctrl+y is redo)
  zz         Center the cursor line
  H          Top of screen
  L          Bottom of screen
@@ -245,6 +246,7 @@ Named registers a-z only populate when explictly used.  Use A-Z to append
  ~             Change case of single character
  15~           Change the case of 15 characters
  g~<motion>    Swap case in the specified direction
+ g~~           Swap case of every character in the line
  gu<motion>    Make lowercase
  gU<motion>    Make uppercase
 
@@ -253,12 +255,16 @@ Named registers a-z only populate when explictly used.  Use A-Z to append
  15gUl         Make this line and the next 15 characters uppercase to the right
  5gUj          Make this line and the next 5 lines uppercase
 
+ Vu            Make this line lowercase (use Capital V)
+ VU            Make this line uppercase (use Capital V)
+
 == Macros ==
 
  qa        Start recording macro a
  q         Stop recording
  @a        Playback macro a
  @@        Playback the most recent macro
+ 5@@       Playback the most recent macro 5 times
  qaq       Erase a macro (start a recording of macro a, then stop it)
 
 To edit a macro, paste it into a new buffer, then update the register:
@@ -280,9 +286,10 @@ Or, with mswin enabled, just use shift+arrow as works in other windows programs
 To select a block with the mouse use Alt+LeftClick
 
  v          Visual block stream
+ vE         Visual block one word
  V          Visual block line
  <CTRL+v>   Visual block column
-            Alternatively, <CTRL+q> when CTRL+v is mapped to paste
+            Alternatively, Q when CTRL+v is mapped to paste
             Defined in .vimrc with: nnoremap Q <C-v>
             Alternatively, use Alt+LeftClick
  <CTRL+g>   Toggle between visual mode and select mode
@@ -297,6 +304,8 @@ To select a block with the mouse use Alt+LeftClick
  >          Indent block
  <          Unindent block
  ~          Change case
+ vEU        Change word to uppercase
+ vEu        Change word to lowercase
  gv         Reselect last visual block
 
  I          Visual Block insert mode; typed text will appear at the start of each line
@@ -307,8 +316,14 @@ To select a block with the mouse use Alt+LeftClick
 
 == Searching ==
 
- /           search forward
+ /           Search forward
+ /\v         Search forward using a regex
+ :/          Search forward
+ :/\v        Search forward using a regex
  ?           Search backward
+ :?          Search backward
+ :g/         See all of the matches to the previous search (can copy with mouse on some systems)
+ :g/pattern  See all of the matches to a pattern
  q/          See menu of recent searches.  The list can be navigated and entries edited
  *           Search forward for word under cursor
  #           Search backward for word under cursor
@@ -365,6 +380,8 @@ for each line matching the pattern.  Before executing the cmd, "." is set to the
  :g/foo/z=3               Show all occurrences of foo, with context, matched line is highlighed with ----------
  :g/foo/z#=3              Show all occurrences of foo, with context, number the output lines
 
+ :g/re/p                  Show all lines containing "re"; origin of the word grep
+
  :g/foo/d                 Delete all lines containing foo
  :g!/pattern/d            Delete all lines that do not match the pattern
  :v/pattern/d             Same as g!
@@ -393,6 +410,8 @@ Examples:
  :CommandName       Enter a command
  :help CommandName  Get help on a command
  q:                 See menu of recent commands. The list can be navigated and entries edited
+                    <Ctrl+f> To see this list while typing a command
+ :q                 Close the window showing recent commands
 
 == Files ==
 
@@ -497,8 +516,10 @@ Examples:
  Ctrl+PageUp         Next tab
  gt                  Next tab
  2gt                 Go to tab #2
+ :tabn[ext]          Next tab
  Ctrl+PageDown       Previous tab
  gT                  Previous tab
+ :tabp[revious]      Previous tab
  :tabr[ewind]        Go to the first tab
  :tabl[ast]          Go to the last tab
  :tabm[ove] [N]      Move the tab to after tab page N (or to the end with N)
@@ -507,6 +528,9 @@ Examples:
 
  :windo {cmd}        Perform the specified command on each window.  Use | for a series of commands
  :tabdo {cmd}        Perform the specified command on each tab.
+
+ :bn[ext]            Go to the next buffer
+ :bp[revious]        Go to the previous buffer
 
  :sball              Display all buffers in a horizontal split
  :tab sball          Convert all buffers to tabs
@@ -565,7 +589,7 @@ Optionally define this in vimrc on a file-type basis
 To wrap existing lines, select them with V (or with the mouse) then type:
  gq
 
-To join two lines together, use:
+To join two lines together, use Capital J:
  J
 
 A space will be added between the two joined lines
@@ -603,6 +627,44 @@ VimDiff shows two files side-by-side
  :scriptnames             See loaded scripts, including .vimrc
 
 See the mswin.vim file to see the overridden key combos and find those to remove/tweak
+
+== Summary of uses of the g key ==
+
+ ge           Navigate backward to the end of the word
+ gE           Navigate backward to the end of the Word
+
+ gg           Go to the start of file
+ G            Go to the end of file
+
+ gt           View the next tab
+ gT           View the previous tab
+
+ <ctrl+g>     View the current file path and status
+ g <Ctrl+g>   View current position in status line
+
+ g;           Go to [count] older cursor position in change list
+ g,           Go to [count] newer cursor position in change list
+
+ g-           Undo to the previous text state
+ g+           Redo to the next text state
+
+ gg"*yG       Copy all, but moves the cursor
+
+ g~<motion>   Swap case in the specified direction
+ gu<motion>   Make lowercase
+ gU<motion>   Make uppercase
+
+ gv           Reselect last visual block
+
+ gd           Go to definition of local symbol under cursor:
+              jumps to first occurrence of the word in the file
+
+ gq{motion}   Wrap existing lines in the motion direction
+ gq           Wrap the selected text, when selected using V or the mouse
+ {gq}         Wrap the current paragraph: { moves to the start of the paragraph and } the end
+
+ gw{motion}   Wrap existing lines like gq, but leave the cursor in the same position
+ gwj          Example use, wrapping the current line and the next
 
 == Shortcuts customized in .vimrc ==
 

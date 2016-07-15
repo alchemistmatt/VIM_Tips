@@ -12,11 +12,11 @@ Latest 64-bit version (auto-compiled); python not integrated
 1. Download the "latest version " from http://www.vim.org/download.php
 * This is 32-bit gVIM, compiled in 2016
 
-2. Double click gvim74.exe
+2. Double click gvim74-1024.exe
 
 3. Dialog says "This will install Vim 7.4 on your computer. Continue?"  Click Yes
 
-4. Uninstall everything, but do not delete "C:\Program Files\Vim" because it has _vimrc
+4. Uninstall everything (if prompted), but do not delete "C:\Program Files\Vim" because it has _vimrc
 * This is a hard-linked file:  "C:\Program Files (x86)\Vim\_vimrc" <--> c:\users\username\_vimrc
 * Created using:
 
@@ -34,7 +34,7 @@ Latest 64-bit version (auto-compiled); python not integrated
 
 7. Download the 64-bit .7z archive from https://tuxproject.de/projects/vim/
 
-8. Extract the files
+8. Extract the files in complete-x64.7z
 
 9. Copy all of the files and paste in folder C:\Program Files\Vim\vim74
 
@@ -47,7 +47,7 @@ Latest 64-bit version (auto-compiled); python not integrated
 
 12. Double click gVim.exe in C:\Program Files\Vim\vim74
 
-13. The program should start and report version 7.4.1089
+13. The program should start and report version 7.4.1829
 
 14. Customize your _vimrc file, see folder %userprofile%
 
