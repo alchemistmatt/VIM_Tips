@@ -349,11 +349,14 @@ To select a block with the mouse use Alt+LeftClick
  :set gdefault?     Check current setting
  :set nogdefault    Restore /g requirement
 
+Note: if you use ":set gdefault" in the .vimrc file, the g is no longer needed for :s or :%s because it becomes implied
+Furthermore, if you use the /g when gdefault is enabled, the search behavior will switch back to replacing the first occurrence only in each line
+
 == Global Replace ==
 
- :%s/foo/bar/g         Substitute all occurrences of "foo" to "bar", on all lines
- :.,$s/foo/bar/g       Substitute all occurrences of "foo" to "bar", from the current line to the end
- :10,20s/foo/bar/g     Substitute all occurrences of "foo" to "bar", on lines 10 through 20
+ :%s/foo/bar/g         Replace all occurrences of "foo" with "bar", on all lines
+ :.,$s/foo/bar/g       Replace all occurrences of "foo" with "bar", from the current line to the end
+ :10,20s/foo/bar/g     Replace all occurrences of "foo" with "bar", on lines 10 through 20
 
  :%s/this/that/gc      Ask for confirmation for each; "q" to quit the search/replace
 
@@ -366,9 +369,6 @@ To select a block with the mouse use Alt+LeftClick
 To remove the need to type \v, update .vimrc to have the following.
  nnoremap / /\v
  vnoremap / /\v
-
-The problem with doing this is that it makes it harder to press /
-then the up arrow to see previous search terms.
 
 == Global Operator ==
 
@@ -686,7 +686,7 @@ See the mswin.vim file to see the overridden key combos and find those to remove
  :Comma                 Add a comma to the end of each line
  :Commaq                Surround each line with single quotes and add a comma
 
- F11                    Toggle showing white space (see :set list!)
+ F11                    Toggle showing whitespace (see :set list!)
 
 == External Programs ==
 
