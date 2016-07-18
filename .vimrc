@@ -112,7 +112,9 @@ set ignorecase        " Ignore case in regex searches
 set smartcase         " Enable case-sensitive search if capitals are present
 set nowrap            " Do not wrap lines longer than the window
 set guioptions+=b     " Show the horizontal scrollbar
-set gdefault          " imply the use of g when searching (replace all matches on a line)
+" Imply the use of g when searching (replace all matches on a line).
+" When this is enabled, if you use /g, the behavior will switch back to only replacing the first occurrence
+set gdefault
 
 " Define the window size
 set co=162
@@ -193,7 +195,8 @@ nnoremap <leader>t :tabnew<CR>
 nnoremap <leader>T :tab sball<CR>
 
 " Shortcut to remove trailing whitespace
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+" nnoremap <leader>W :%s/\v\s+$//<cr>:let @/=''<CR>
+nnoremap <leader>W :%s/\v\s+$//<CR>
 
 " Shortcut to change the working directory
 " To see the current working directory, use :cd
@@ -251,14 +254,14 @@ function! CommaJoinLines(addQuotes)
 
 	" Remove trailing whitespace (if any); the e flag means to not issue an
 	" error message if the search has no matches
-	:silent %s/\s\+$//ge
+	:silent %s/\v\s+$//e
 
 	if (a:addQuotes != 0)
 		" Surround lines with quotes and add a comma
-		:silent %s/.\+/'\0',/g
+		:silent %s/\v.+/'\0',/
 	else
 		" Add a comma to each line
-		:silent %s/.\+/\0,/g
+		:silent %s/\v.+/\0,/
 	endif
 
 	" Remove the final comma
