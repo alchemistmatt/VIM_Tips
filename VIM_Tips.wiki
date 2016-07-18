@@ -113,7 +113,7 @@ On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
  zz         Center the cursor line
  H          Top of screen
  L          Bottom of screen
-<CTRL+l>    Redraw the screen
+ <CTRL+l>   Redraw the screen
 
 == Editing ==
 
@@ -146,7 +146,7 @@ Command defined in .vimrc to insert a blank line above the cursor
 
 == Changing ==
 
-Changing means to delete the characer, word, line, etc. and enter Insert mode.
+Changing means to delete the character, word, line, etc. and enter Insert mode.
 The deleted item does get placed into the paste buffer
 
  r           Replace single character; R replace multiple characters
@@ -181,7 +181,7 @@ The deleted item does get placed into the paste buffer
  d4j          Delete from here through 4 lines down
  di(          Delete inside parentheses
  da(          Delete around parentheses (delete all text within the parentheses and remove them)
- dt<letter> Delete to letter: delete from current character to the next occurrence of the letter
+ dt<letter>   Delete to letter: delete from current character to the next occurrence of the letter
 
 == Cut and paste (put) ==
 
@@ -293,7 +293,8 @@ To select a block with the mouse use Alt+LeftClick
             Defined in .vimrc with: nnoremap Q <C-v>
             Alternatively, use Alt+LeftClick
  <CTRL+g>   Toggle between visual mode and select mode
- most motion commands extend the block to the new cursor position
+
+ Use motion commands to extend the block to the new cursor position
 
  o          Moves the cursor to the other end of the block
  d or x     Cut block into paste buffer
@@ -340,7 +341,7 @@ To select a block with the mouse use Alt+LeftClick
 
  :s/this/that/             Replace this with that; only changes the first match of the current line (or of selected lines)
  :s/this/that/g            Replace all occurrences on the line (or selected lines)
- :s/this/that/gc           Ask for confirmation before replacingi
+ :s/this/that/gc           Ask for confirmation before replacing
  :s/this/that/gi           Count number of matches, but do not replace
  :s/this/this\r/g          Replace "this" with "this" followed by a carriage return
  :s/this|\that/other\r/g   Replace "this" or "that" with "other"
@@ -362,13 +363,15 @@ Furthermore, if you use the /g when gdefault is enabled, the search behavior wil
 
  :%s/\(\d\+\)/\1,/gc   Find all sequential numbers (\d\+) and add a comma after them
  :%s/\v(\d+)/\1\,/gc   Use \v to remove the need for all of the extra \ characters
-                       (i.e., to tell vim that you are intentially using regex symbols)
+                       (i.e., to tell vim that you are intentionally using regex symbols)
 
  :%s/pattern//gn       Count the number of matches (leave out the g to count the lines)
 
 To remove the need to type \v, update .vimrc to have the following.
  nnoremap / /\v
  vnoremap / /\v
+
+Note: with ":set gdefault" in the .vimrc file, the behavior of the g flag is reversed
 
 == Global Operator ==
 
@@ -377,7 +380,7 @@ for each line matching the pattern.  Before executing the cmd, "." is set to the
 
  :g/foo/                  Show all occurrences of foo
  :g/foo/z.3               Show all occurrences of foo, with context
- :g/foo/z=3               Show all occurrences of foo, with context, matched line is highlighed with ----------
+ :g/foo/z=3               Show all occurrences of foo, with context, matched line is highlighted with ----------
  :g/foo/z#=3              Show all occurrences of foo, with context, number the output lines
 
  :g/re/p                  Show all lines containing "re"; origin of the word grep
@@ -393,7 +396,7 @@ for each line matching the pattern.  Before executing the cmd, "." is set to the
 
 Examples:
  :g!/^.\+[*].\+$/d        Delete all lines that do not contain *
- :g!/\v^.+[*].+$/d        Equalivant command using \v
+ :g!/\v^.+[*].+$/d        Equivalent command using \v
 
 === Search/replace in gvim on Windows ===
 
@@ -443,7 +446,7 @@ Examples:
 
  '0             Open most recent file
  '1             Open second most recent file (works through '9)
-               "Most recent" files are saved when you exit vim
+                "Most recent" files are saved when you exit vim
 
  :e .           Directory explorer (in current window; file must be unchanged)
  :Explore       Directory explorer in the path of the current file (split if file modified, otherwise file closed)
@@ -464,7 +467,7 @@ Examples:
  %              Create a new file
  d              Create a new directory
  x              Execute application for selected file (e.g. open .html file in a browser)
-                Related to this, type gx while editing a file to have that file opened in the application
+                Also, type gx while editing a file to have that file opened in the application
  R              Rename the current file
  <CTRL+l>       Refresh the listing
  <CTRL+h>       Define the hiding list (patterns to hide); comma separated list
@@ -493,7 +496,7 @@ Examples:
 .vimrc setting so that \ then v creates a new vertical split and moves to it
  nnoremap <leader>v <C-w>v<C-w>l
 
- <CTRL+w>_           Maximise current window
+ <CTRL+w>_           Maximize current window
  <CTRL+w>=           Make all windows equal size
 
  <CTRL+w>+           Increase horizontal window size
