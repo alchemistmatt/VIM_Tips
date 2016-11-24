@@ -160,6 +160,10 @@ The deleted item does get placed into the paste buffer
  cc          Change whole line (delete the line and enter insert mode)
  ci(         Change inside parentheses
  ca(         Change around parentheses (delete text within the parentheses, then enter insert mode)
+ ci<         Change inside < and >
+ ci{         Change inside { and }
+ ci[         Change inside [ and ]
+ ciw         Change inside word (replace the word)
  ct<letter>  Change to letter: change from current character to the next occurrence of the letter
 
 == Deleting ==
@@ -181,12 +185,20 @@ The deleted item does get placed into the paste buffer
  d4j          Delete from here through 4 lines down
  di(          Delete inside parentheses
  da(          Delete around parentheses (delete all text within the parentheses and remove them)
+ di<          Delete inside < and >
+ di{          Delete inside { and }
+ di[          Delete inside [ and ]
+ diw          Delete inside word
+ dis          Delete inside sentence
+ dip          Delete inside paragraph
  dt<letter>   Delete to letter: delete from current character to the next occurrence of the letter
 
 == Cut and paste (put) ==
 
  yy    Copy line into paste buffer
  y$    Copy from character to the end of the line
+ yi"   Yank inside " and "
+ yi<   Yank inside < and >
 
  dd    Cut line into paste buffer
  dw    Cut word into paste buffer
@@ -620,6 +632,7 @@ VimDiff shows two files side-by-side
 
  dp      Put the selected section in the other file
  do      Obtain the selected section from the other file
+ (these do not work with Visual Mode)
 
 == Settings ==
 
@@ -670,6 +683,10 @@ See the mswin.vim file to see the overridden key combos and find those to remove
  gwj          Example use, wrapping the current line and the next
 
 == Shortcuts customized in .vimrc ==
+
+ The default leader key is \
+ To use a comma as the leader, update .vimrc to have:
+ let mapleader = ","
 
  LeaderKey v            Open a vertical split and switch over to the new window (\v or ,v)
  LeaderKey n            Create a new tab
