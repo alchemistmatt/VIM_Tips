@@ -128,13 +128,14 @@ On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
  g+             Next text state
  wundo {file}   Write undo history to a file
  rundo {file}   Read undo history from a file
+ <CTRL+o>       While in insert mode, switches to normal mode for a single command, then back to insert mode
 
 == Inserting ==
 
 All insertion commands are terminated with <Esc> to return to command mode.
 
  i       Insert text at cursor
- 10i     Repeat whatever is typed 10 times
+ 10i     Repeat whatever is typed next 10 times.  Insert 10 spaces with: 10i space <ESC>
  I       Insert text at start of line
  a       Append text after cursor
  A       Append text after end of line
@@ -149,9 +150,11 @@ Command defined in .vimrc to insert a blank line above the cursor
 Changing means to delete the character, word, line, etc. and enter Insert mode.
 The deleted item does get placed into the paste buffer
 
- r           Replace single character; R replace multiple characters
+ r           Replace single character
+ R           Replace multiple characters
  15rx        Change 15 characters to x, starting at the cursor
  s           Change single character
+ S           Change whole line (delete the line and enter insert mode)
  cw          Change word
  C           Change to end of line
  c<motion>   Changes text in the direction of the motion
@@ -349,11 +352,13 @@ To select a block with the mouse use Alt+LeftClick
 .vimrc setting to disable highlighting of search matches (temporarily); type \ then a space
  nnoremap <leader><space> :noh<CR>
 
-== Replacing ==
+== Replacing (Substituting) ==
 
  :s/this/that/             Replace this with that; only changes the first match of the current line (or of selected lines)
  :s/this/that/g            Replace all occurrences on the line (or selected lines)
- :s/this/that/gc           Ask for confirmation before replacing
+ :s/this/that/gc           Ask for confirmation before replacing.
+                           y/n/a/q/l for yes, no, all remaining, quit, and last (yes to this one but quit)
+                           Also available while confirming replacements is CTRL+E and CTRL+Y to scroll the screen
  :s/this/that/gi           Count number of matches, but do not replace
  :s/this/this\r/g          Replace "this" with "this" followed by a carriage return
  :s/this|\that/other\r/g   Replace "this" or "that" with "other"
@@ -430,25 +435,25 @@ Examples:
 
 == Files ==
 
- :w             Write buffer to disk (whether or not it has changes)
- :w name        Write buffer to disk as name (but original filename remains unchanged)
- :DiffOrig      Compare buffer text to file on disk to see changes
- :saveas name   Save under a new name
- :update        Write buffer to disk if it has changed (mapped to Ctrl+S in mswin.vim)
- :n             Edit a new file; :n! edit a new file without saving current changes
+ :w                 Write buffer to disk (whether or not it has changes)
+ :w name            Write buffer to disk as name (but original filename remains unchanged)
+ :DiffOrig          Compare buffer text to file on disk to see changes
+ :saveas name       Save under a new name
+ :update            Write buffer to disk if it has changed (mapped to Ctrl+S in mswin.vim)
+ :n                 Edit a new file; :n! edit a new file without saving current changes
+ :q                 Quit editing a file; :q! quit editing without saving changes
+ :e                 Refresh file contents (if changed outside vim)
+ :e!                Reload even though buffer has changed
+ :edit Test.txt     Edit a new file named Test.txt (or open Test.txt if it already exists)
+ ZZ                 Write file to disk and quit immediately
+ :qa[all]           Close all buffers, unless they're modified
+ :conf qa           Confirm qall; see save prompt for each modified buffer
+ :bmod              Go to the next modified buffer
 
- :q             Quit editing a file; :q! quit editing without saving changes
- :e             Refresh file contents (if changed outside vim)
- :e!            Reload even though buffer has changed
- ZZ             Write file to disk and quit immediately
- :qa[all]       Close all buffers, unless they're modified
- :conf qa       Confirm qall; see save prompt for each modified buffer
- :bmod          Go to the next modified buffer
-
- :file          Print the current filename to the status line (same as Ctrl+G)
- :file!         Print the filename and do not truncate if a very long name
- :!echo %       Echo full path to console (allow for copy)
- :rec[over]     Recover lost changes after VIM crashes; uses the :sw[ap] file
+ :file              Print the current filename to the status line (same as Ctrl+G)
+ :file!             Print the filename and do not truncate if a very long name
+ :!echo %           Echo full path to console (allow for copy on Windows)
+ :rec[over]         Recover lost changes after VIM crashes; uses the :sw[ap] file
 
  :browse oldfiles   See recent files; type a number to open one; if lots of files, press q to exit the "more" listing
  :bro ol            Shorthand
@@ -494,8 +499,10 @@ Examples:
 
 == Windows, Tabs, and Buffers ==
 
- <CTRL+w>s           Split window
+ <CTRL+w>s           Split window horizonally
+ :sp                 Split window (or :split)
  <CTRL+w>v           Vertical split the window
+ :vsp                Vertical split the window (or :vsplit)
  <CTRL+w>n           New window
  <CTRL+w>j           Down to next window of horizontal split
  <CTRL+w>k           Up to previous window of horizontal split
@@ -524,7 +531,7 @@ Examples:
  :new                New buffer
  :enew               New file in the current buffer (use :enew! to discard changes)
 
- :tabe               Create a new tab
+ :tabe               Create a new tab (:tabedit)
  :tab new            Create a new tab
  :tabnew             Create a new tab
 
