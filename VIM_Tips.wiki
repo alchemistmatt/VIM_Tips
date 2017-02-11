@@ -150,15 +150,16 @@ Command defined in .vimrc to insert a blank line above the cursor
 Changing means to delete the character, word, line, etc. and enter Insert mode.
 The deleted item does get placed into the paste buffer
 
- r           Replace single character
- R           Replace multiple characters
+ r           Replace single character. In visual mode, replace highlighted text with the character.
  15rx        Change 15 characters to x, starting at the cursor
- s           Change single character
+ R           Replace multiple characters as you type
+ s           Change (substitute) single character (stays in insert mode)
  S           Change whole line (delete the line and enter insert mode)
- cw          Change word
+ c           In visual mode, change (replace) the highlighted text (using insert mode)
+ cw          Change (replace) word
  C           Change to end of line
- c<motion>   Changes text in the direction of the motion
  c$          Change to end of line
+ c<motion>   Changes text in the direction of the motion
  c^          Change to beginning of line
  cc          Change whole line (delete the line and enter insert mode)
  ci(         Change inside parentheses
@@ -309,7 +310,14 @@ To select a block with the mouse use Alt+LeftClick
             Alternatively, use Alt+LeftClick
  <CTRL+g>   Toggle between visual mode and select mode
 
- Use motion commands to extend the block to the new cursor position
+ Use motion commands to extend the block to the new cursor position.
+ These include hjkl plus:
+ w          Select the next word and any space following
+ W          Select the next word and any space or punctuation following
+ e          Select to the end of the next word
+ E          Select to the end of the next word, plus any punctuation following
+ b          Select the previous word
+ B          Select the previous word, skipping over punctuation
 
  o          Moves the cursor to the other end of the block
  d or x     Cut block into paste buffer
@@ -447,8 +455,8 @@ Examples:
  :edit Test.txt     Edit a new file named Test.txt (or open Test.txt if it already exists)
  ZZ                 Write file to disk and quit immediately
  :qa[all]           Close all buffers, unless they're modified
+ :close             Close the current window (when multiple windows are visible)
  :conf qa           Confirm qall; see save prompt for each modified buffer
- :bmod              Go to the next modified buffer
 
  :file              Print the current filename to the status line (same as Ctrl+G)
  :file!             Print the filename and do not truncate if a very long name
@@ -510,7 +518,9 @@ Examples:
  <CTRL+w>l           Over to right window of vertical split
  <CTRL+w>p           Previous window
  <CTRL+w>w           Next window (same as <CTRL+w><CTRL+w>; Ctrl+Tab works with gvim)
- <CTRL+w>c           Close the window (same as :q)
+ <CTRL+w>c           Close the window
+ :close              Close the window
+ :q                  Close (quit) the window
 
 .vimrc setting so that \ then v creates a new vertical split and moves to it
  nnoremap <leader>v <C-w>v<C-w>l
@@ -553,6 +563,7 @@ Examples:
 
  :bn[ext]            Go to the next buffer
  :bp[revious]        Go to the previous buffer
+ :bmod               Go to the next modified buffer
 
  :sball              Display all buffers in a horizontal split
  :tab sball          Convert all buffers to tabs
