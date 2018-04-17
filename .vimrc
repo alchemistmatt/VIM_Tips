@@ -4,7 +4,7 @@ if v:progname =~? "evim"
 endif
 
 filetype off
-call pathogen#infect()
+execute pathogen#infect()
 filetype plugin indent on
 
 " Use Vim settings, rather than Vi settings (much better!).
@@ -63,7 +63,7 @@ set incsearch		" do incremental searching
 set laststatus=2
 
 " View relative line numbers to the left
-set relativenumber
+" set relativenumber
 
 " Simple status line that just shows filename:
 " set statusline=%f "tail of the filename
@@ -112,6 +112,7 @@ set ignorecase        " Ignore case in regex searches
 set smartcase         " Enable case-sensitive search if capitals are present
 set nowrap            " Do not wrap lines longer than the window
 set guioptions+=b     " Show the horizontal scrollbar
+
 " Imply the use of g when searching (replace all matches on a line).
 " When this is enabled, if you use /g, the behavior will switch back to only replacing the first occurrence
 set gdefault
@@ -148,8 +149,7 @@ set ttyfast
 set wildmenu
 set wildmode=list:longest,full " Control how 'wildmenu' things are listed
 
-" Uncomment to create undo files (remember undo history even after closing the
-" file
+" Uncomment to create undo files (remember undo history even after closing the file)
 " set undofile
 
 " Default directory list style

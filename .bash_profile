@@ -1,8 +1,10 @@
-# ~/.bash_profile
+# .bash_profile
 
 [[ -s ~/.profile ]] && source ~/.profile
 
 # Get the aliases and functions
+# [[ -r ~/.bashrc ]] &&  source ~/.bashrc
+
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc
 fi
