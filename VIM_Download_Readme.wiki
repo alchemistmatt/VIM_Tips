@@ -91,7 +91,7 @@ rem Or use: curl -Lko pathogenAlt.vim https://tpo.pe/pathogen.vim
 ==== Gundo ====
 
 Graphical representaion of your undo history
-http://sjl.bitbucket.org/gundo.vim/
+https://github.com/sjl/gundo.vim
 
 Requires that Vim be compiled with Python 2.4+
 Open gvim.exe in a text editor to determine the expected filenames, for example:
@@ -113,6 +113,7 @@ Add to .vimrc:
 
 Display selectable list of Most Recently Used files
 http://www.vim.org/scripts/script.php?script_id=521
+https://github.com/yegappan/mru
 
 Command:
  :MRU
@@ -121,6 +122,7 @@ Command:
 
 Automatic reload of modified Vim scripts
 http://peterodding.com/code/vim/reload/
+https://github.com/xolox/vim-reload
 
 After changing a script file, this plugin auto-reloads it
 and shows a status message saying that it has done so.  To
@@ -140,11 +142,12 @@ Commands:
 
 Advanced status bar
 http://vimawesome.com/plugin/vim-airline-sad-beautiful-tragic
+https://github.com/vim-airline/vim-airline
 
 ==== YankRing ====
 
 Easily access copied (yanked) or deleted text
-http://www.vim.org/scripts/script.php?script_id=1234
+https://github.com/vim-scripts/YankRing.vim
 
 Add to .vimrc:
 
@@ -155,8 +158,13 @@ Also, after pasting text, use Ctrl+P and Ctrl+N to cycle through recent buffers
 
 ==== Syntax Files ====
 
-txt.vim: http://www.vim.org/scripts/script.php?script_id=1532
+Store in ~/.vim/syntax/txt.vim
+or %userprofile%\vimfiles\syntax
+
+txt.vim: https://www.vim.org/scripts/script.php?script_id=1532
 * Updated version at https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master/vimfiles/syntax/txt.vim
+
+proteinFasta.vim: https://www.vim.org/scripts/script.php?script_id=5236
 
 mediawiki.vim: https://github.com/chikamichi/mediawiki.vim/
 
@@ -164,15 +172,13 @@ mediawiki.vim: https://github.com/chikamichi/mediawiki.vim/
 
 <pre>
 cd ~/.vim/bundle/
-git clone https://github.com/sjl/gundo.vim.git gundo
+git clone https://github.com/sjl/gundo.vim gundo
 git clone https://github.com/xolox/vim-reload vim-reload
 git clone https://github.com/xolox/vim-misc vim-misc
 git clone https://github.com/yegappan/mru mru
-git clone https://github.com/bling/vim-airline vim-airline
+git clone https://github.com/vim-airline/vim-airline vim-airline
 git clone https://github.com/chikamichi/mediawiki.vim/ mediawiki.vim
-
-curl -o yankring_190.zip http://www.vim.org/scripts/download_script.php?src_id=23487
-unzip -d yankring yankring_190.zip
+git clone https://github.com/vim-scripts/YankRing.vim yankring
 
 curl -o ScrollColor.vim http://www.vim.org/scripts/download_script.php?src_id=5966
 mkdir scrollcolor
@@ -198,15 +204,13 @@ curl -ko txt.vim https://raw.githubusercontent.com/alchemistmatt/VIM_Tips/master
 <pre>
 c:
 cd %userprofile%\vimfiles\bundle
-git clone http://github.com/sjl/gundo.vim.git gundo
-git clone http://github.com/xolox/vim-reload vim-reload
-git clone http://github.com/xolox/vim-misc vim-misc
-git clone http://github.com/yegappan/mru mru
-git clone https://github.com/bling/vim-airline vim-airline
+git clone https://github.com/sjl/gundo.vim.git gundo
+git clone https://github.com/xolox/vim-reload vim-reload
+git clone https://github.com/xolox/vim-misc vim-misc
+git clone https://github.com/yegappan/mru mru
+git clone https://github.com/vim-airline/vim-airline vim-airline
 git clone https://github.com/chikamichi/mediawiki.vim/ mediawiki.vim
-
-curl -o yankring_190.zip http://www.vim.org/scripts/download_script.php?src_id=23487
-unzip -d yankring yankring_190.zip
+git clone https://github.com/vim-scripts/YankRing.vim yankring
 
 curl -o ScrollColor.vim http://www.vim.org/scripts/download_script.php?src_id=5966
 mkdir scrollcolor
@@ -241,5 +245,5 @@ or
 
 http://vimcolors.com/?utf8=%E2%9C%93&bg=light&colors=gui&order=newest
 
- git clone https://github.com/flazz/vim-colorschemes.git ~/.vim
+git clone https://github.com/flazz/vim-colorschemes.git ~/.vim
 
