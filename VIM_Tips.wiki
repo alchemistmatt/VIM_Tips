@@ -243,19 +243,21 @@ Named registers a-z only populate when explictly used.  Use A-Z to append
 == Sorting ==
 
  :[range]sor[t]    Sort lines in [range].  If no range, sort all lines
- :1,50sor          Sort lines 1 to 50
- :1,50sor!         Reverse sort lines 1 to 50
- :1,50sor i        Ignore case
- :1,50sor n        Sort by number
- :1,50sor u        Remove duplicates
- :10,$sor          Sort from line 10 to the end
- :.,$sor           Sort from the current line to the end
- :.+1,$sor         Sort from the next line to the end
+ :1,50sort         Sort lines 1 to 50
+ :1,50sort!        Reverse sort lines 1 to 50
+ :1,50sort i       Ignore case
+ :1,50sort n       Sort by number
+ :1,50sort u       Remove duplicates (u for unique)
+ :10,$sort         Sort from line 10 to the end
+ :.,$sort          Sort from the current line to the end
+ :.+1,$sort        Sort from the next line to the end
 
  :sort /{pattern}/      Begin sorting after the match to a pattern
  :sort /.*\%10v/        Sort starting at virtual column 10
  :sort /.\{-}\ze\d/ n   Sort on the first number (the \ze flag means to end the match while \d is a digit)
  :sort /\a\a\a/ r       Only use the first three letters to sort (\a is a character class)
+
+ Optionally use visual mode to select a range of rows to sort.
 
 == Case ==
 
