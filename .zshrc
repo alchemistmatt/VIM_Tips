@@ -19,8 +19,8 @@ bindkey '\e[4~' end-of-line
 # Disable beeping on errors
 unsetopt beep
 
-# Enable vim commands when using the Zsh Line Editor (toggle the editor with Escape)
-bindkey -v
+# Enable emacs shortcuts when using the Zsh Line Editor
+bindkey -e
 
 # Enable the completion system
 zstyle :compinstall filename '/home/d3l243/.zshrc'

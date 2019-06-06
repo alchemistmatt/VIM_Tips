@@ -126,9 +126,8 @@ zstyle -e :urlglobber url-other-schema '[[ $__remote_commands[(i)$words[1]] -le 
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
-# Enable vim commands when using the Zsh Line Editor (toggle the editor with Escape)
-bindkey -v
+# Enable emacs shortcuts when using the Zsh Line Editor
+bindkey -e
 
 # The following are handled by oh-my-zsh, and are thus commented out here
 # Enable the completion system
