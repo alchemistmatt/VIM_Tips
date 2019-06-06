@@ -34,6 +34,11 @@ shopt -s checkjobs        # Warn of running jobs on logout (suspend task with Ct
 shopt -s histverify       # Show command from history with:   !34<enter>
 shopt -s nocaseglob       # case-insensitive match to:        cd ap*<enter>
 
+# Prevent .* from matching . and .. using globignore
+# However, if you enable this, * will match all files, including those that start with a period
+# This is non-standard bash behavior and could break scripts
+# GLOBIGNORE=.
+
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 

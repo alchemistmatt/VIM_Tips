@@ -12,6 +12,6 @@ fi
 # User specific environment and startup programs
 # Note that .bashrc will load aliases from .bash_aliases
 
-PATH=$PATH:$HOME/bin
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
 
 export PATH

@@ -284,8 +284,10 @@ if has("autocmd")
 		:autocmd BufNewFile,BufRead [Mm]akefile* set noexpandtab
 
 		" Turn on expandtab for several file types
+		:autocmd BufNewFile,BufRead *.conf set expandtab
 		:autocmd BufNewFile,BufRead *.cs set expandtab
 		:autocmd BufNewFile,BufRead *.java set expandtab
+		:autocmd BufNewFile,BufRead *.php set expandtab
 		:autocmd BufNewFile,BufRead *.vb set expandtab
 		:autocmd BufNewFile,BufRead *.wiki set expandtab
 
