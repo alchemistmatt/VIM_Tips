@@ -5,16 +5,20 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# User specific environment
+PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+export PATH
+
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
 # Command history settings
 
-# don't put duplicate lines or lines starting with spaces in the history
+# don't put duplicate lines or lines starting with space in the history
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-# append to the history file; don't overwrite it
+# append to the history file, don't overwrite it
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -77,7 +81,7 @@ xterm*|rxvt*)
     ;;
 esac
 
-# Alias definitions.
+# User specific aliases and functions
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases

@@ -5,7 +5,7 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls="ls -alF --color=auto --time-style='+%Y-%m-%d %H:%M:%S'"
     alias lsd="ls -alF --color=auto --sort=time --reverse --time-style='+%Y-%m-%d %H:%M:%S'"
-    alias l='/bin/ls -CF --color=auto'
+    alias l='/usr/bin/ls -CF --color=auto'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -15,15 +15,19 @@ if [ -x /usr/bin/dircolors ]; then
 else
     alias ls="ls -alF --time-style='+%Y-%m-%d %H:%M:%S'"
     alias lsd="ls -alF --sort=time --reverse --time-style='+%Y-%m-%d %H:%M:%S'"
-    alias l='/bin/ls -CF'
+    alias l='/usr/bin/ls -CF'
 fi
 
 alias cd..='cd ..'
 alias cls='clear'
 alias edit='nano'
 alias ftp='echo Use scp or lftp'
+alias glances='sudo /usr/local/bin/glances'
 alias hf='history | grep -i $1'
 alias less='less -R'
+# alias sudo='sudo -E env "PATH=$PATH"'
+alias updatedb='echo Updating /var/lib/mlocate/mlocate.db or /var/cache/locate/locatedb but excluding /mnt && sudo updatedb --prunepaths=''/mnt'''
+# alias yum='echo Use apt-get or dnf'
 
 # Use fk to repeat the last command but use sudo this time
 alias fk='echo sudo $(fc -ln -1) && sudo $(fc -ln -1)'
