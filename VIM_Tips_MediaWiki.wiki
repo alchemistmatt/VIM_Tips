@@ -1,0 +1,1413 @@
+This document of VIM tips was originally inspired by
+http://stackoverflow.com/questions/5400806/what-are-the-most-used-vim-commands-keypresses
+
+The complete VIM manual is available online at
+http://vimdoc.sourceforge.net/htmldoc/usr_toc.html
+
+The content of this document is also in a similarly formatted wiki file in this repo
+* [https://github.com/alchemistmatt/VIM_Tips/blob/master/VIM_Tips.wiki VIM_Tips.wiki]
+
+== General ==
+
+Nearly all commands can be preceded by a number for a repeat count. eg. 5dd delete 5 lines.
+
+The escape key gets you out of any mode and back to command mode.
+
+Commands preceded by : are executed on the command line at the bottom of the screen.
+
+{| class="wikitable"
+|-
+| <code>:help CmdName</code> || Help with any command
+|-
+| <code>:h CmdName</code> || <code>:help</code> shorthand
+|}
+
+== Navigation ==
+
+Use <code>h j k l</code> for cursor movement: 
+{| class="wikitable"
+|-
+| <code>h</code> || Move left
+|-
+| <code>j</code> || Move down
+|-
+| <code>k</code> || Move up
+|-
+| <code>l</code> || Move right
+|}
+
+* Many terminals also support arrow keys for movement
+* On gvim, can also use Ctrl+left and Ctrl+right
+
+=== By character ===
+
+{| class="wikitable"
+|-
+| <code>fx</code> || To next occurrence of x to the right (allows [a-zA-Z0-9])
+|-
+| <code>Fx</code> || To next occurrence of x to the left
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>4fx</code> || To 4th occurrence of x to the right
+|-
+| <code>3Fx</code> || To 3rd occurrence of x to the left
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>tx</code> || Till before next occurrence of x to the right
+|-
+| <code>Tx</code> || Till before next occurrence of x to the left
+|-
+| <code>4tr</code> || Go to the 4th r to the right
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>;</code> || Repeat the latest f or t [count] times (on the same line)
+|-
+| <code>,</code> || Repeat the latest f or t [count] times in the opposite direction (on the same line)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>%</code> || To matching marker, one of ([{}]) or /* */ or #if #endif
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>[(</code> || Go to previous unmatched (
+|-
+| <code>[{</code> || Go to previous unmatched {
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>](</code> || Go to next unmatched (
+|-
+| <code>]{</code> || Go to next unmatched }
+|}
+
+=== By words ===
+
+{| class="wikitable"
+|-
+| <code>w</code> || Next word (by punctuation)
+|-
+| <code>W</code> || Next word (by spaces)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>b</code> || Back word (by punctuation)
+|-
+| <code>B</code> || Back word (by spaces)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>e</code> || End word (by punctuation)
+|-
+| <code>E</code> || End word (by spaces)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>ge</code> || Backward to the end of the word
+|-
+| <code>gE</code> || Backward to the end of the Word
+|}
+
+=== By line ===
+
+{| class="wikitable"
+|-
+| <code>0</code> || Start of line
+|-
+| <code>^</code> || First non-whitespace
+|-
+| <code>$</code> || End of line
+|}
+
+=== By paragraph ===
+
+{| class="wikitable"
+|-
+| <code>{</code> || Previous blank line
+|-
+| <code>}</code> || Next blank line
+|}
+
+=== By sentence ===
+
+{| class="wikitable"
+|-
+| <code>(</code> || Previous sentence
+|-
+| <code>)</code> || Next sentence
+|}
+
+=== By file ===
+
+{| class="wikitable"
+|-
+| <code>gg</code> || Start of file
+|-
+| <code>G</code> || End of file
+|-
+| <code>123G</code> || Go to line 123
+|-
+| <code>50%</code> || Go to 50% point
+|-
+| <code>512go</code> || Go to byte 512
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>g <Ctrl+g></code> || View current position in status line
+* In Visual mode, shows the size of the block
+|}
+
+=== By marker ===
+
+{| class="wikitable"
+|-
+| <code>mx</code> || Set a mark named x
+|-
+| <code>'x</code> || Go to mark named
+|-
+| <code>'.</code> || Go to position of last edit
+|-
+| <code>' '</code> || Go back to last point before jump (two apostrophes, no space)
+|-
+| <code>:marks     See marks
+|}
+
+=== By edit history ===
+
+{| class="wikitable"
+|-
+| <code><CTRL+o></code> || Go to [count] Older cursor position in jump list
+|-
+| <code><CTRL+i></code> || Go to [count] Newer cursor position in jump list
+|-
+| <code>:ju[mps]</code> || Print the jump list
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>g;</code> || Go to [count] older cursor position in change list
+|-
+| <code>g,</code> || Go to [count] newer cursor position in change list
+|-
+| <code>:changes</code> || View changes
+|}
+
+== Scrolling ==
+
+{| class="wikitable"
+|-
+| <code><CTRL+f></code> || Forward full screen
+|-
+| <code><CTRL+b></code> || Backward full screen
+|-
+| <code><CTRL+d></code> || Down half screen
+|-
+| <code><CTRL+u></code> || Up half screen
+|-
+| <code><CTRL+e></code> || Scroll one line up
+|-
+| <code><CTRL+y></code> || Scroll one line down (not on Windows if Ctrl+y is redo)
+|-
+| <code>zz</code> || Center the cursor line
+|-
+| <code>H</code> || Top of screen
+|-
+| <code>L</code> || Bottom of screen
+|-
+| <code><CTRL+l></code> || Redraw the screen
+|}
+
+== Editing ==
+
+{| class="wikitable"
+|-
+| <code>u</code> || Undo
+|-
+| <code><CTRL+r></code> || Redo
+|-
+| <code>.</code> || Repeat last editing command
+|-
+| <code><CTRL+g> u</code> || While in insert mode, marks a new undo point
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:earlier 2m</code> || Undo back to the state 2 minutes ago
+|-
+| <code>:later 2m</code> || Redo forward in time (2 minutes)
+|-
+| <code>g-</code> || Previous text state
+|-
+| <code>g+</code> || Next text state
+|-
+| <code>wundo {file}</code> || Write undo history to a file
+|-
+| <code>rundo {file}</code> || Read undo history from a file
+|-
+| <code><CTRL+o></code> || While in insert mode, switches to normal mode for a single command, then back to insert mode
+|}
+
+== Inserting ==
+
+All insertion commands are terminated with <Esc> to return to command mode.
+
+{| class="wikitable"
+|-
+| <code>i</code> || Insert text at cursor
+|-
+| <code>10i</code> || Repeat whatever is typed next 10 times.  Insert 10 spaces with: 10i space <ESC>
+|-
+| <code>I</code> || Insert text at start of line
+|-
+| <code>a</code> || Append text after cursor
+|-
+| <code>A</code> || Append text after end of line
+|-
+| <code>o</code> || Open new line below
+|-
+| <code>O</code> || Open new line above
+|-
+| <code><Shift+Enter></code>
+| Command defined in .vimrc to insert a blank line above the cursor
+* Enable with: <code>map <S-Enter> O<ESC></code>
+|}
+
+== Changing ==
+
+Changing means to delete the character, word, line, etc. and enter Insert mode.
+The deleted item does get placed into the paste buffer
+
+{| class="wikitable"
+|-
+| <code>r</code> || Replace single character. In visual mode, replace highlighted text with the character.
+|-
+| <code>15rx</code> || Change 15 characters to x, starting at the cursor
+|-
+| <code>R</code> || Replace multiple characters as you type
+|-
+| <code>s</code> || Change (substitute) single character (stays in insert mode)
+|-
+| <code>S</code> || Change whole line (delete the line and enter insert mode)
+|-
+| <code>c</code> || In visual mode, change (replace) the highlighted text (using insert mode)
+|-
+| <code>cw</code> || Change (replace) word
+|-
+| <code>C</code> || Change to end of line
+|-
+| <code>c$</code> || Change to end of line
+|-
+| <code>c<motion></code> || Changes text in the direction of the motion
+|-
+| <code>c^</code> || Change to beginning of line
+|-
+| <code>cc</code> || Change whole line (delete the line and enter insert mode)
+|-
+| <code>ci(</code> || Change inside parentheses
+|-
+| <code>ca(</code> || Change around parentheses (delete text within the parentheses, then enter insert mode)
+|-
+| <code>ci<</code> || Change inside < and >
+|-
+| <code>ci{</code> || Change inside { and }
+|-
+| <code>ci[</code> || Change inside [ and ]
+|-
+| <code>ciw</code> || Change inside word (replace the word)
+|-
+| <code>ct<letter></code> || Change to letter: change from current character to the next occurrence of the letter
+|}
+
+== Deleting ==
+
+Deleting deletes the item, but does not enter insert mode
+The deleted item does get placed into the paste buffer
+
+{| class="wikitable"
+|-
+| <code>x</code> || Delete single char
+|-
+| <code>20x</code> || Delete 20 characters
+|-
+| <code>dw</code> || Delete word
+|-
+| <code>D</code> || Delete to end of line
+|-
+| <code>d$</code> || Delete to end of line
+|-
+| <code>dd</code> || Delete whole line
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>d<motion></code> || Deletes in the direction of the motion, e.g. d$ or d0
+* In visual mode, d deletes the current selection
+|-
+| <code>d0</code> || Delete to start of line
+|-
+| <code>d^</code> || Delete to start of line
+|-
+| <code>d4j</code> || Delete from here through 4 lines down
+|-
+| <code>di(</code> || Delete inside parentheses
+|-
+| <code>da(</code> || Delete around parentheses (delete all text within the parentheses and remove them)
+|-
+| <code>di<</code> || Delete inside < and >
+|-
+| <code>di{</code> || Delete inside { and }
+|-
+| <code>di[</code> || Delete inside [ and ]
+|-
+| <code>diw</code> || Delete inside word
+|-
+| <code>dis</code> || Delete inside sentence
+|-
+| <code>dip</code> || Delete inside paragraph
+|-
+| <code>dt<letter></code> || Delete to letter: delete from current character to the next occurrence of the letter
+|}
+
+== Cut and paste (put) ==
+
+{| class="wikitable"
+|-
+| <code>yy</code> || Copy line into paste buffer
+|-
+| <code>y$</code> || Copy from character to the end of the line
+|-
+| <code>yi"</code> || Yank inside " and "
+|-
+| <code>yi<</code> || Yank inside < and >
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>dd</code> || Cut line into paste buffer
+|-
+| <code>dw</code> || Cut word into paste buffer
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>p</code> || Paste buffer below cursor line
+|-
+| <code>P</code> || Paste buffer above cursor line
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>xp</code> || Swap two characters (x to delete one character, then p to put it back after the cursor position)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>"4p</code> || Paste from register 4 (auto-populated with recent cut/copy operations)
+|-
+| <code>"bp</code> || Paste from register b
+|}
+
+== Registers ==
+
+Registers allow you to store the next delete, yank, or put operation in a variable
+* Use a combination of {a-zA-Z0-9.%#:-"} to control how data is stored in the register
+** <code>"</code> means to use a register
+* 0-9
+** Registers 0-9 hold the most recent delete / yank contents
+** They are auto-populated
+* a-z and A-Z are named registers
+** Only populate when <code>"</code> is explicitly used
+** Use A-Z to append the operation to the register
+* <code>*</code> and <code>+</code> are the GUI clipboard
+
+{| class="wikitable"
+|-
+| <code>:reg[isters]</code> || Show all registers
+|-
+| <code>:reg 1a</code> || Show registers 1 and a
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>"byy</code> || Copy the entire line into register b
+|-
+| <code>"bY</code> || Same as "byy
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>"byj</code> || Copy this line and the next line (k=down); store in register b
+|-
+| <code>"Byy</code> || Copy this line and append to register b (because capital B)
+|-
+| <code>"bp</code> || Paste contents of register b
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>3"myj</code> || Copy this line and the next 3 lines down (j); store in register m
+|-
+| <code>8"+yj</code> || Copy this line and the next 3 lines down (j); store in the GUI clipboard
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:%y+</code> || Copy all lines to the GUI clipboard (% means all lines; y is yank, and + is GUI clipboard)
+|-
+| <code>gg"*yG</code> || Alternative to copy all, but moves the cursor
+|-
+| <code>"*y</code> || Copy to clipboard when in Visual Mode (equivalent to <Ctrl+c>)
+|}
+
+== Sorting ==
+
+{| class="wikitable"
+|-
+| <code>:[range]sor[t]</code> || Sort lines in [range].  If no range, sort all lines
+|-
+| <code>:1,50sort</code> || Sort lines 1 to 50
+|-
+| <code>:1,50sort!</code> || Reverse sort lines 1 to 50
+|-
+| <code>:1,50sort i</code> || Ignore case
+|-
+| <code>:1,50sort n</code> || Sort by number
+|-
+| <code>:1,50sort u</code> || Remove duplicates (u for unique)
+|-
+| <code>:10,$sort</code> || Sort from line 10 to the end
+|-
+| <code>:.,$sort</code> || Sort from the current line to the end
+|-
+| <code>:.+1,$sort</code> || Sort from the next line to the end
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:sort /{pattern}/</code> || Begin sorting after the match to a pattern
+|-
+| <code>:sort /.*\%10v/</code> || Sort starting at virtual column 10
+|-
+| <code>:sort /.\{-}\ze\d/ n</code> || Sort on the first number (the \ze flag means to end the match while \d is a digit)
+|-
+| <code>:sort /\a\a\a/ r</code> || Only use the first three letters to sort (\a is a character class)
+|}
+
+Optionally use visual mode to select a range of rows to sort.
+
+== Case ==
+
+{| class="wikitable"
+|-
+| <code>~</code> || Change case of single character
+|-
+| <code>15~</code> || Change the case of 15 characters
+|-
+| <code>g~<motion></code> || Swap case in the specified direction
+|-
+| <code>g~~</code> || Swap case of every character in the line
+|-
+| <code>gu<motion></code> || Make lowercase
+|-
+| <code>gU<motion></code> || Make uppercase
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>20g~l</code> || Swap case of 20 characters to the right
+|-
+| <code>20g~h</code> || Swap case of 20 characters to the left
+|-
+| <code>15gUl</code> || Make this line and the next 15 characters uppercase to the right
+|-
+| <code>5gUj</code> || Make this line and the next 5 lines uppercase
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>Vu</code> || Make this line lowercase (use Capital V)
+|-
+| <code>VU</code> || Make this line uppercase (use Capital V)
+|}
+
+== Macros ==
+
+{| class="wikitable"
+|-
+| <code>qa</code> || Start recording macro a
+|-
+| <code>q</code> || Stop recording
+|-
+| <code>@a</code> || Playback macro a
+|-
+| <code>@@</code> || Playback the most recent macro
+|-
+| <code>5@@</code> || Playback the most recent macro 5 times
+|-
+| <code>qaq</code> || Erase a macro (start a recording of macro a, then stop it)
+|}
+
+To edit a macro, paste it into a new buffer, then update the register:
+
+{| class="wikitable"
+|-
+| <code>:new</code> || Create a new buffer
+|-
+| <code>"xp</code> || Paste register x into the buffer
+|-
+| || Edit the keystrokes
+|-
+| <code><Esc></code> || Return to normal mode
+|-
+| <code>0"xy$</code> || Go to beginning of line; into register x, yank to end of line
+|-
+| <code>:bd!</code> || Delete the new buffer without saving (same as :q!)
+|-
+| <code>@x</code> || Execute modified recording
+|}
+
+== Blocks (Visual Mode) ==
+
+Note: in gvim, visual mode is exited if you use arrow keys; you must use: <code>h j k l</code>
+
+Or, with mswin enabled, just use shift+arrow as works in other windows programs
+
+To select a block with the mouse use Alt+LeftClick
+
+{| class="wikitable"
+|-
+| <code>v</code> || Visual block stream
+|-
+| <code>vE</code> || Visual block one word
+|-
+| <code>V</code> || Visual block line
+|-
+| <code><CTRL+v></code> || Visual block column
+* Alternatively, Q when CTRL+v is mapped to paste
+* Defined in .vimrc with: nnoremap Q <C-v>
+* Alternatively, use Alt+LeftClick
+|-
+| <code><CTRL+g></code> || Toggle between visual mode and select mode
+|}
+
+Use motion commands to extend the block to the new cursor position.
+* These include <code>h j k l</code> plus:
+{| class="wikitable"
+|-
+| <code>w</code> || Select the next word and any space following
+|-
+| <code>W</code> || Select the next word and any space or punctuation following
+|-
+| <code>e</code> || Select to the end of the next word
+|-
+| <code>E</code> || Select to the end of the next word, plus any punctuation following
+|-
+| <code>b</code> || Select the previous word
+|-
+| <code>B</code> || Select the previous word, skipping over punctuation
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>o</code> || Moves the cursor to the other end of the block
+|-
+| <code>d or x</code> || Cut block into paste buffer
+|-
+| <code>y</code> || Copy block into paste buffer
+|-
+| <code>c</code> || Change text (cut into paste buffer then enter Insert mode)
+|-
+| <code>s</code> || Same as c
+|-
+| <code>rx</code> || Replace the selected text with x
+|-
+| <code>&gt;</code> || Indent block
+|-
+| <code>&lt;</code> || Unindent block
+|-
+| <code>~</code> || Change case
+|-
+| <code>vEU</code> || Change word to uppercase
+|-
+| <code>vEu</code> || Change word to lowercase
+|-
+| <code>gv</code> || Reselect last visual block
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>I</code> || Visual Block insert mode; typed text will appear at the start of each line
+|-
+| <code>A</code> || Visual Block append mode; typed text will appear at the end of each line
+|-
+| <code><Ctrl+r>"</code> || Insert the contents of the unnamed register (last yank or delete)
+|-
+| <code><Ctrl+r>*</code> || Insert the contents of the GUI clipboard
+|-
+| <code><Ctrl+r>b</code> || Insert the contents of register b
+|}
+
+== Searching ==
+
+{| class="wikitable"
+|-
+| <code>/</code> || Search forward
+|-
+| <code>/\v</code> || Search forward using a regex
+|-
+| <code>:/</code> || Search forward
+|-
+| <code>:/\v</code> || Search forward using a regex
+|-
+| <code>?</code> || Search backward
+|-
+| <code>:?</code> || Search backward
+|-
+| <code>:g/</code> || See all of the matches to the previous search (can copy with mouse on some systems)
+|-
+| <code>:g/pattern</code> || See all of the matches to a pattern
+|-
+| <code>q/</code> || See menu of recent searches.  The list can be navigated and entries edited
+|-
+| <code>*</code> || Search forward for word under cursor
+|-
+| <code>#</code> || Search backward for word under cursor
+|-
+| <code>n</code> || Next match in same direction
+|-
+| <code>N</code> || Next match in opposite direction
+|-
+| <code>/http:\/\/</code> || Search for http://
+|-
+| <code>:noh</code> || Disable highlighting of the matches (temporarily)
+|}
+
+.vimrc setting to disable highlighting of search matches (temporarily); type \ then a space
+<pre>
+nnoremap <leader><space> :noh<CR>
+</pre>
+
+== Replacing (Substituting) ==
+
+{| class="wikitable"
+|-
+| <code>:s/this/that/</code> || Replace this with that; only changes the first match of the current line (or of selected lines)
+|-
+| <code>:s/this/that/g</code> || Replace all occurrences on the line (or selected lines)
+|-
+| <code>:s/this/that/gc</code> || Ask for confirmation before replacing.
+* y/n/a/q/l for yes, no, all remaining, quit, and last (yes to this one but quit)
+* Also available while confirming replacements is CTRL+E and CTRL+Y to scroll the screen
+|-
+| <code>:s/this/that/gi</code> || Count number of matches, but do not replace
+|-
+| <code>:s/this/this\r/g</code> || Replace "this" with "this" followed by a carriage return
+|-
+| <code>:s/this|\that/other\r/g</code> || Replace "this" or "that" with "other"
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:set gdefault</code> || Remove the need for /g
+|-
+| <code>:set gdefault?</code> || Check current setting
+|-
+| <code>:set nogdefault</code> || Restore /g requirement
+|}
+
+Note: if you use ":set gdefault" in the .vimrc file, the g is no longer needed for :s or :%s because it becomes implied
+Furthermore, if you use the /g when gdefault is enabled, the search behavior will switch back to replacing the first occurrence only in each line
+
+== Global Replace ==
+
+{| class="wikitable"
+|-
+| <code>:%s/foo/bar/g</code> || Replace all occurrences of "foo" with "bar", on all lines
+|-
+| <code>:.,$s/foo/bar/g</code> || Replace all occurrences of "foo" with "bar", from the current line to the end
+|-
+| <code>:10,20s/foo/bar/g</code> || Replace all occurrences of "foo" with "bar", on lines 10 through 20
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:%s/this/that/gc</code> || Ask for confirmation for each; "q" to quit the search/replace
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:%s/\(\d\+\)/\1,/gc</code> || Find all sequential numbers (\d\+) and add a comma after them
+|-
+| <code>:%s/\v(\d+)/\1\,/gc</code> || Use \v to remove the need for all of the extra \ characters
+* i.e., to tell vim that you are intentionally using regex symbols
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:%s/pattern//gn</code> || Count the number of matches (leave out the g to count the lines)
+|}
+
+To remove the need to type \v, update .vimrc to have the following.
+<pre>
+nnoremap / /\v
+vnoremap / /\v
+</pre>
+
+Note: with ":set gdefault" in the .vimrc file, the behavior of the g flag is reversed
+
+== Global Operator ==
+
+The g operator acts on a specified range (default whole file), by executing the given command
+for each line matching the pattern.  Before executing the cmd, "." is set to the current line.
+
+{| class="wikitable"
+|-
+| <code>:g/foo/</code> || Show all occurrences of foo
+|-
+| <code>:g/foo/z.3</code> || Show all occurrences of foo, with context
+|-
+| <code>:g/foo/z=3</code> || Show all occurrences of foo, with context, matched line is highlighted with ----------
+|-
+| <code>:g/foo/z#=3</code> || Show all occurrences of foo, with context, number the output lines
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:g/re/p</code> || Show all lines containing "re"; origin of the word grep
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:g/foo/d</code> || Delete all lines containing foo
+|-
+| <code>:g!/pattern/d</code> || Delete all lines that do not match the pattern
+|-
+| <code>:v/pattern/d</code> || Same as g!
+|-
+| <code>:g/^\s*$/d</code> || Delete all blank lines (zero or more whitespace characters)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:qaq:g/pattern/y A</code> || Copy (yank) all matching lines into register a (must type qaq first to clear register a)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:g/pattern/normal @q</code> || Run macro q on all matching lines
+|}
+
+Examples:
+{| class="wikitable"
+|-
+| <code>:g!/^.\+[*].\+$/d</code> || Delete all lines that do not contain *
+|-
+| <code>:g!/\v^.+[*].+$/d</code> || Equivalent command using \v
+|}
+
+=== Search/replace in gvim on Windows ===
+
+{| class="wikitable"
+|-
+| <code>:prompt</code> || See a search dialog
+|-
+| <code>:promptr</code> || See a search/replace dialog
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:ret[ab]</code> || Replace all tabs with spaces (default spaces per tab, see :set tabstop?)
+* Only works if ":set expandtab" is enabled
+|-
+| <code>:set expandtab</code> || Note that expandtab is a per-file extension setting
+|-
+| <code>:ret 8</code> || Replace all tabs with 8 spaces; also updates tabstop
+|}
+
+== Commands ==
+
+{| class="wikitable"
+|-
+| <code>:CommandName</code> || Enter a command
+|-
+| <code>:help CommandName</code> || Get help on a command
+|-
+| <code>q:</code> || See menu of recent commands. The list can be navigated and entries edited
+* <Ctrl+f> To see this list while typing a command
+|-
+| <code>:q</code> || Close the window showing recent commands
+|}
+
+== Files ==
+
+{| class="wikitable"
+|-
+| <code>:w</code> || Write buffer to disk (whether or not it has changes)
+|-
+| <code>:w name</code> || Write buffer to disk as name (but original filename remains unchanged)
+|-
+| <code>:DiffOrig</code> || Compare buffer text to file on disk to see changes
+|-
+| <code>:saveas name</code> || Save under a new name
+|-
+| <code>:update</code> || Write buffer to disk if it has changed (mapped to Ctrl+S in mswin.vim)
+|-
+| <code>:n</code> || Edit a new file; :n! edit a new file without saving current changes
+|-
+| <code>:q</code> || Quit editing a file; :q! quit editing without saving changes
+|-
+| <code>:e</code> || Refresh file contents (if changed outside vim)
+|-
+| <code>:e!</code> || Reload even though buffer has changed
+|-
+| <code>:edit Test.txt</code> || Edit a new file named Test.txt (or open Test.txt if it already exists)
+|-
+| <code>ZZ</code> || Write file to disk and quit immediately
+|-
+| <code>:qa[all]</code> || Close all buffers, unless they're modified
+|-
+| <code>:close</code> || Close the current window (when multiple windows are visible)
+|-
+| <code>:conf qa</code> || Confirm qall; see save prompt for each modified buffer
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:file</code> || Print the current filename to the status line (same as Ctrl+G)
+|-
+| <code>:file!</code> || Print the filename and do not truncate if a very long name
+|-
+| <code>:!echo %</code> || Echo full path to console (allow for copy on Windows)
+|-
+| <code>:rec[over]</code> || Recover lost changes after VIM crashes; uses the :sw[ap] file
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:browse oldfiles</code> || See recent files; type a number to open one; if lots of files, press q to exit the "more" listing
+|-
+| <code>:bro ol</code> || Shorthand
+|-
+| <code>:ol[dfiles]</code> || See recent files
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:MRU</code> || Use mru plugin (see also File->Recent Files in the GUI)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>'0</code> || Open most recent file
+|-
+| <code>'1</code> || Open second most recent file (works through '9)
+* "Most recent" files are saved when you exit vim
+|}
+
+=== Directory Explorer ===
+
+{| class="wikitable"
+|-
+| <code>:e .</code> || Start directory explorer (in current window; file must be unchanged)
+|-
+| <code>:Explore</code> || Directory explorer in the path of the current file (split if file modified, otherwise file closed)
+|-
+| <code>:Hexplore</code> || Directory explorer in the path of the current file (split window)
+|-
+| <code>:Texplore</code> || Directory explorer in the path of the current file (new tab)
+|}
+
+==== Directory Explorer Shortcuts ====
+
+{| class="wikitable"
+|-
+| <code><Enter></code> || Open the selected file (and close the explorer)
+|-
+| <code>v</code> || Open the selected file with a vertical split (explorer on the right)
+|-
+| <code>P</code> || Edit selected file in the previously used (last accessed) window
+|-
+| <code>s</code> || Change sort
+|-
+| <code>r</code> || Reverse sort
+|-
+| <code>i</code> || Change listing style
+|-
+| <code>u</code> || Change to earlier directory
+|-
+| <code>U</code> || Change to later directory
+|-
+| <code>p</code> || Preview selected file
+|-
+| <code>%</code> || Create a new file
+|-
+| <code>d</code> || Create a new directory
+|-
+| <code>x</code> || Execute application for selected file (e.g. open .html file in a browser)
+* Also, type gx while editing a file to have that file opened in the application
+|-
+| <code>R</code> || Rename the current file
+|-
+| <code><CTRL+l></code> || Refresh the listing
+|-
+| <code><CTRL+h></code> || Define the hiding list (patterns to hide); comma separated list
+|-
+| <code>a</code> || Cycle from showing all files, hiding the specified files, or only showing the specified files from <CTRL+h>
+|-
+| <code>mf</code> || Mark files.  After marking, could show/hide with "a".  Many other commands exist list cut, copy, delete, etc.
+|-
+| <code>mF</code> || Unmark all files
+|-
+| <code>md</code> || Vimdiff two marked files
+|-
+| <code>mh</code> || Add a marked file's suffix to the hiding list
+|-
+| <code>qb</code> || Query bookmarks
+|}
+
+== Windows, Tabs, and Buffers ==
+
+{| class="wikitable"
+|-
+| <code><CTRL+w>s</code> || Split window horizonally
+|-
+| <code>:sp</code> || Split window (or :split)
+|-
+| <code><CTRL+w>v</code> || Vertical split the window
+|-
+| <code>:vsp</code> || Vertical split the window (or :vsplit)
+|-
+| <code><CTRL+w>n</code> || New window
+|-
+| <code><CTRL+w>j</code> || Down to next window of horizontal split
+|-
+| <code><CTRL+w>k</code> || Up to previous window of horizontal split
+|-
+| <code><CTRL+w>h</code> || Over to left window of vertical split
+|-
+| <code><CTRL+w>l</code> || Over to right window of vertical split
+|-
+| <code><CTRL+w>p</code> || Previous window
+|-
+| <code><CTRL+w>w</code> || Next window (same as <CTRL+w><CTRL+w>; Ctrl+Tab works with gvim)
+|-
+| <code><CTRL+w>c</code> || Close the window
+|-
+| <code>:close</code> || Close the window
+|-
+| <code>:q</code> || Close (quit) the window
+|}
+
+.vimrc setting so that \ then v creates a new vertical split and moves to it
+<pre>
+nnoremap <leader>v <C-w>v<C-w>l
+</pre>
+
+{| class="wikitable"
+|-
+| <code><CTRL+w>_</code> || Maximize current window
+|-
+| <code><CTRL+w>=</code> || Make all windows equal size
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code><CTRL+w>+</code> || Increase horizontal window size
+|-
+| <code>5<CTRL+w>-</code> || Decrease horizontal window size by 5 lines
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code><CTRL+w>></code> || Move vertical slider one column to the right
+|-
+| <code>5<CTRL+w><</code> || Move vertical slider 5 columns to the left
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code><CTRL+w>r</code> || Swap two windows
+|-
+| <code><CTRL+w>H</code> || Go from horizontal to vertical layout (use capital H)
+|-
+| <code><CTRL+w>J</code> || Go from vertical to horizontal layout (use capital J)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:new</code> || New buffer
+|-
+| <code>:enew</code> || New file in the current buffer (use :enew! to discard changes)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:tabe</code> || Create a new tab (:tabedit)
+|-
+| <code>:tab</code> || new            Create a new tab
+|-
+| <code>:tabnew</code> || Create a new tab
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>Ctrl+PageUp</code> || Next tab
+|-
+| <code>gt</code> || Next tab
+|-
+| <code>2gt</code> || Go to tab #2
+|-
+| <code>:tabn[ext]</code> || Next tab
+|-
+| <code>Ctrl+PageDown</code> || Previous tab
+|-
+| <code>gT</code> || Previous tab
+|-
+| <code>:tabp[revious]</code> || Previous tab
+|-
+| <code>:tabr[ewind]</code> || Go to the first tab
+|-
+| <code>:tabl[ast]</code> || Go to the last tab
+|-
+| <code>:tabm[ove] [N]</code> || Move the tab to after tab page N (or to the end with N)
+|-
+| <code>:+tabm</code> || Move the tab to the right
+|-
+| <code>:-tabm</code> || Move the tab to the left
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:windo {cmd}</code> || Perform the specified command on each window.  Use | for a series of commands
+|-
+| <code>:tabdo {cmd}</code> || Perform the specified command on each tab.
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:bn[ext]</code> || Go to the next buffer
+|-
+| <code>:bp[revious]</code> || Go to the previous buffer
+|-
+| <code>:bmod</code> || Go to the next modified buffer
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:sball</code> || Display all buffers in a horizontal split
+|-
+| <code>:tab sball</code> || Convert all buffers to tabs
+|}
+
+== Source Navigation ==
+
+{| class="wikitable"
+|-
+| <code>%</code> || Jump to matching parenthesis/bracket/brace, or language block if language module loaded
+|-
+| <code>gd</code> || Go to definition of local symbol under cursor: jumps to first occurrence of the word in the file
+|-
+| <code><CTRL+]></code> || Jump to definition of global symbol (requires tags file)
+|-
+| <code><CTRL+t></code> || Return to previous position (arbitrary stack of positions maintained)
+|-
+| <code><CTRL+n></code> || (in insert mode) automatic word completion
+|}
+
+== Syntax Coloring ==
+
+Vim auto-selects the highlighting method based on the file extension
+* To override, use:
+
+{| class="wikitable"
+
+|-
+| <code>:setf language</code> || Set current language
+|-
+| <code>:set filetype</code> || View current language
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:syn list</code> || View current syntax rules; use d and u to move down and up
+|-
+| <code>:syn clear</code> || Turn off highlighting
+|-
+| <code>:syn on</code> || Turn on highlighting
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:hi[light]</code> || List all highlight groups; use d and u to move down and up
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>:set syntax=c</code> || Use the c syntax rules
+|-
+| <code>:set showmatch</code> || When a bracket is typed, briefly jump to the matching bracket (if visible on the screen)
+|}
+
+=== Diagnosing Performance ===
+
+Use :syntime to find out what patterns are consuming most time
+
+{| class="wikitable"
+|-
+| <code>:syntime on</code> || 
+|-
+| <code>Ctrl+L</code> || Redraw the text (one or more times)
+|-
+| <code>:syntime report</code> || See results
+|}
+
+== Line Numbers and Line Highlighting ==
+
+{| class="wikitable"
+|-
+| <code>:set nu[mber]</code> || Show line numbers
+|-
+| <code>:set nonu[mber]</code> || Disable line numbers
+|-
+| <code>:set cursorline</code> || Highlight the current line
+|-
+| <code>:set nocul</code> || Disable highlighting the line
+|}
+
+== Show local changes ==
+
+Vim has some features that make it easy to highlight lines that have been changed from a base version in source control.
+See the small vim script that makes this easy: http://github.com/ghewgill/vim-scmdiff
+
+== Formatting ==
+
+{| class="wikitable"
+|-
+| <code>:set textwidth=80</code> || Set the wrap width
+|}
+
+Optionally define this in vimrc on a file-type basis
+<pre>
+au BufRead,BufNewFile *.txt setlocal textwidth=80
+</pre>
+
+{| class="wikitable"
+|-
+| <code>gq</code> || Wrap existing lines, selected with V (or with the mouse)
+|-
+| <code>J</code> || Join two adjacent lines together
+* A space will be added between the two joined lines
+|-
+| <code>:Comma</code> || Call a custom function (defined in _vimrc) to add a comma to each line
+|-
+| <code>:Commaq</code> || Similar to :Comma but surrounds each line with single quotes
+|}
+
+== VimDiff ==
+
+VimDiff shows two files side-by-side
+
+{| class="wikitable"
+|-
+| <code>[c</code> || Jump to previous change (difference)
+|-
+| <code>]c</code> || Jump to next change (difference)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>zo</code> || Open one fold under the cursor
+|-
+| <code>zO</code> || Open all folds under the cursor (recursively)
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>zc</code> || Close one fold under the cursor
+|-
+| <code>zC</code> || Close all folds under the cursor
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>za</code> || Toggle one fold under the cursor
+|-
+| <code>zA</code> || Toggle all folds under the cursor
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>zX</code> || Undo manually opened and closed folds
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>dp</code> || Put the selected section in the other file
+|-
+| <code>do</code> || Obtain the selected section from the other file
+* <code>dp</code> and <code>do</code> do not work with Visual Mode
+|}
+
+== Settings ==
+
+{| class="wikitable"
+|-
+| <code>:set gdefault?</code> || View the current value for the gdefault setting
+|-
+| <code>:verbose map <C-Y></code> || See what the Ctrl+Y key combination is mapped to
+|-
+| <code>:map</code> || See key bindings
+|-
+| <code>:unmap <C-Y></code> || Place this in _vmrc to unmap Ctrl+Y
+|-
+| <code>:scriptnames</code> || See loaded scripts, including .vimrc
+|}
+
+See the mswin.vim file to see the overridden key combos and find those to remove/tweak
+
+== Summary of uses of the g key ==
+
+{| class="wikitable"
+|-
+| <code>ge</code> || Navigate backward to the end of the word
+|-
+| <code>gE</code> || Navigate backward to the end of the Word
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>gg</code> || Go to the start of file
+|-
+| <code>G</code> || Go to the end of file
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>gt</code> || View the next tab
+|-
+| <code>gT</code> || View the previous tab
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code><ctrl+g></code> || View the current file path and status
+|-
+| <code>g <Ctrl+g></code> || View current position in status line
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>g;</code> || Go to [count] older cursor position in change list
+|-
+| <code>g,</code> || Go to [count] newer cursor position in change list
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>g-</code> || Undo to the previous text state
+|-
+| <code>g+</code> || Redo to the next text state
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>gg"*yG</code> || Copy all, but moves the cursor
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>g~<motion></code> || Swap case in the specified direction
+|-
+| <code>gu<motion></code> || Make lowercase
+|-
+| <code>gU<motion></code> || Make uppercase
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>gv</code> || Reselect last visual block
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>gd</code> || Go to definition of local symbol under cursor:
+* jumps to first occurrence of the word in the file
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>gq{motion}</code> || Wrap existing lines in the motion direction
+|-
+| <code>gq</code> || Wrap the selected text, when selected using V or the mouse
+|-
+| <code>{gq}</code> || Wrap the current paragraph: { moves to the start of the paragraph and } the end
+|-
+| style="border-style: none; background-color:#ffffff; height:3px;" | 
+| style="border-style: none; background-color:#ffffff;" | 
+|-
+| <code>gw{motion}</code> || Wrap existing lines like gq, but leave the cursor in the same position
+|-
+| <code>gwj</code> || Example use, wrapping the current line and the next
+|}
+
+== Shortcuts customized in .vimrc ==
+
+ The default leader key is \
+ To use a comma as the leader, update .vimrc to have:
+<pre>
+let mapleader = ","
+
+LeaderKey v            Open a vertical split and switch over to the new window (\v or ,v)
+LeaderKey n            Create a new tab
+LeaderKey t            Create a new tab
+LeaderKey T            Change all buffers to tabs
+
+F3                     View YankRing buffers
+LeaderKey N            Cycle through YankRing buffers
+LeaderKey P            Cycle through YankRing buffers
+
+LeaderKey O            Change the working directory to use the current file's folder (see :cd)
+
+LeaderKey <space>      Disable highlighting of search matches (temporarily); type \ then a space
+
+LeaderKey W            Remove trailing whitespace
+</pre>
+
+{| class="wikitable"
+|-
+| <code>:Comma</code> || Add a comma to the end of each line
+|-
+| <code>:Commaq</code> || Surround each line with single quotes and add a comma
+|-
+| <code>F11</code> || Toggle showing whitespace (see :set list!)
+|}
+
+== External Programs ==
+
+{| class="wikitable"
+|-
+| <code>:Thtml</code> || Run Tidy to format an html file
+|-
+| <code>:Txml</code> || Run Tidy to format a xml file
+|}
+
+These are mapped to commands in the _vimrc file:
+<pre>
+:command Thtm  :%!tidy -q -i --tidy-mark 0      2>/dev/null<CR>
+:command Txml  :%!tidy -q -i --tidy-mark 0 -xml 2>/dev/null<CR>
+</pre>
+
+[[Category:Software]]
