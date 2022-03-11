@@ -12,13 +12,18 @@ The escape key gets you out of any mode and back to command mode.
 
 Commands preceded by : are executed on the command line at the bottom of the screen.
  :help CmdName      Help with any command
- :h CmdName         :h shorthand
+ :h CmdName         `:help` shorthand
 
 == Navigation ==
 
-Cursor movement: h j k l (left down up right)
+Use <code>h j k l</code> for cursor movement: 
+ h    Move left
+ j    Move down
+ k    Move up
+ l    Move right
 
-On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
+* Many terminals also support arrow keys for movement
+* On gvim, can also use Ctrl+left and Ctrl+right
 
 === By character ===
 
@@ -100,7 +105,7 @@ On gvim, can use arrow keys, including Ctrl+left and Ctrl+right
 
  g;         Go to [count] older cursor position in change list
  g,         Go to [count] newer cursor position in change list
- :changes
+ :changes   View changes
 
 == Scrolling ==
 
@@ -217,14 +222,20 @@ The deleted item does get placed into the paste buffer
 
 == Registers ==
 
-Use {a-zA-Z0-9.%#:-"} for the next delete, yank, or put operation
+
+Registers allow you to store the next delete, yank, or put operation in a variable
+* Use a combination of {a-zA-Z0-9.%#:-"} to control how data is stored in the register
+** <code>"</code> means to use a register
+* 0-9
+** Registers 0-9 hold the most recent delete / yank contents
+** They are auto-populated
+* a-z and A-Z are named registers
+** Only populate when <code>"</code> is explicitly used
+** Use A-Z to append the operation to the register
+* <code>*</code> and <code>+</code> are the GUI clipboard
+
  :reg[isters]    Show all registers
  :reg 1a         Show registers 1 and a
-
-Registers 0-9 hold the most recent delete / yank contents
-
-Named registers a-z only populate when explictly used.  Use A-Z to append
- * and + are the GUI clipboard
 
  "byy    Copy the entire line into register b
  "bY     Same as "byy
@@ -233,8 +244,8 @@ Named registers a-z only populate when explictly used.  Use A-Z to append
  "Byy    Copy this line and append to register b (because capital B)
  "bp     Paste contents of register b
 
- 3"myj   Copy this line and the next 3 lines; store in register m
- 8"+yj   Copy this line and the next 3 lines; store in the GUI clipboard
+ 3"myj   Copy this line and the next 3 lines down (j); store in register m
+ 8"+yj   Copy this line and the next 3 lines down (j); store in the GUI clipboard
 
  :%y+    Copy all lines to the GUI clipboard (% means all lines; y is yank, and + is GUI clipboard)
  gg"*yG  Alternative to copy all, but moves the cursor
@@ -287,7 +298,7 @@ Named registers a-z only populate when explictly used.  Use A-Z to append
 
 To edit a macro, paste it into a new buffer, then update the register:
 
- :new      New buffer
+ :new      Create a new buffer
  "xp       Paste register x into the buffer
  [edit the keystrokes]
  <Esc>     Return to normal mode
@@ -297,7 +308,7 @@ To edit a macro, paste it into a new buffer, then update the register:
 
 == Blocks (Visual Mode) ==
 
-Note: in gvim, visual mode is exited if you use arrow keys; you must use: h j k l
+Note: in gvim, visual mode is exited if you use arrow keys; you must use: <code>h j k l</code>
 
 Or, with mswin enabled, just use shift+arrow as works in other windows programs
 
@@ -312,8 +323,8 @@ To select a block with the mouse use Alt+LeftClick
             Alternatively, use Alt+LeftClick
  <CTRL+g>   Toggle between visual mode and select mode
 
- Use motion commands to extend the block to the new cursor position.
- These include hjkl plus:
+Use motion commands to extend the block to the new cursor position.
+* These include <code>h j k l</code> plus:
  w          Select the next word and any space following
  W          Select the next word and any space or punctuation following
  e          Select to the end of the next word
@@ -431,7 +442,7 @@ Examples:
  :promptr           See a search/replace dialog
 
  :ret[ab]           Replace all tabs with spaces (default spaces per tab, see :set tabstop?)
-                   Only works if ":set expandtab" is enabled
+                    Only works if ":set expandtab" is enabled
  :set expandtab     Note that expandtab is a per-file extension setting
  :ret 8             Replace all tabs with 8 spaces; also updates tabstop
 
@@ -475,7 +486,7 @@ Examples:
  '1             Open second most recent file (works through '9)
                 "Most recent" files are saved when you exit vim
 
- :e .           Directory explorer (in current window; file must be unchanged)
+ :e .           Start directory explorer (in current window; file must be unchanged)
  :Explore       Directory explorer in the path of the current file (split if file modified, otherwise file closed)
  :Hexplore      Directory explorer in the path of the current file (split window)
  :Texplore      Directory explorer in the path of the current file (new tab)
@@ -624,10 +635,10 @@ Optionally define this in vimrc on a file-type basis
 To wrap existing lines, select them with V (or with the mouse) then type:
  gq
 
-To join two lines together, use Capital J:
+To join two ajacent lines together, use Capital J:
+* A space will be added between the two joined lines
  J
 
-A space will be added between the two joined lines
 
  :Comma    Call a custom function (defined in _vimrc) to add a comma to each line
  :Commaq   Similar to :Comma but surrounds each line with single quotes
